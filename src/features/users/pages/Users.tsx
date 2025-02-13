@@ -1,7 +1,14 @@
+import { UsersType } from "../types";
+import UsersList from "../components/UsersList";
+
 const Users = () => {
+    const USERS: UsersType = [{
+        id: 'u1', name: 'Ric Mershon', url: "dummy", places: 3
+    }];
+
     return (
-        <h1>Hello Users.</h1>
-    )
+        <UsersList users={USERS}/>
+    );
 }
 
 export default Users;
