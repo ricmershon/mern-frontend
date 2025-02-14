@@ -1,8 +1,8 @@
-interface UserType {
-    id: string,
+export interface UserType {
+    id?: string,
     name: string,
     image: string,
-    places: number
+    placeCount: number
 }
 
 export type UsersType = Array<UserType>;

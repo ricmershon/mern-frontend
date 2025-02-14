@@ -1,28 +1,24 @@
 import { UsersType } from "../types";
 import UserItem from "./UserItem";
 
-interface UsersListProps {
-    users: UsersType
-}
-
-const UsersList = ({ users }: UsersListProps) => {
+const UsersList = ({ users }: { users: UsersType }) => {
     if (users.length === 0) {
         return (
-            <div className="text-center flex justify-center items-center">
-                <h2>Now users found.</h2>
+            <div>
+                <h2>No users found.</h2>
             </div>
         )
     }
 
     return (
-        <ul>
+        <ul className="list-none p-0 w-[90%] max-w-[50rem] flex justify-center flex-wrap">
             {users.map((user) => (
                 <UserItem
                     key={user.id}
                     id={user.id}
                     image={user.image}
                     name={user.name}
-                    placeCount={user.places}
+                    placeCount={user.placeCount}
                 />
             ))}
         </ul>
