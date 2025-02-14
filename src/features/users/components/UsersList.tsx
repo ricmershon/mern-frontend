@@ -1,5 +1,5 @@
-import { UsersType } from "../types";
-import UserItem from "./UserItem";
+import { UsersType } from "@/features/users/types";
+import UserItem from "@/features/users/components/UserItem";
 
 const UsersList = ({ users }: { users: UsersType }) => {
     if (users.length === 0) {

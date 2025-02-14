@@ -1,5 +1,5 @@
-import { UsersType } from "../types";
-import UsersList from "../components/UsersList";
+import { UsersType } from "@/features/users/types";
+import UsersList from "@/features/users/components/UsersList";
 
 const Users = () => {
     const USERS: UsersType = [{

@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
 
-import { UserType } from "../types";
-
-import Avatar from "../../../shared/components/ui-elements/Avatar";
-import Card from "../../../shared/components/ui-elements/Card";
+import { UserType } from "@/features/users/types";
+import Avatar from "@/shared/components/ui-elements/Avatar";
+import Card from "@/shared/components/ui-elements/Card";
 
 const UserItem = ({ id, image, name, placeCount }: UserType) => (
     <li className="m-4 w-[calc(45%-2rem)] min-w-[17.5rem] group">
