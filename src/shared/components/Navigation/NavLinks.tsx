@@ -4,7 +4,7 @@ import './NavLinks.css';
 
 const NavLinks = (props) => {
     return (
-        <ul className="list-none m-0 p-0 w-full h-full flex flex-col justify-center items-center md:flex-row">
+        <ul className="nav-links">
             <li>
                 <NavLink to="/" exact>ALL USERS</NavLink>
             </li>

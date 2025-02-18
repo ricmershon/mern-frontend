@@ -10,26 +10,26 @@
 	align-items: center;
 }
 
-li {
+.nav-links li {
 	margin: 1rem;
 }
 
-a {
+.nav-links a {
 	border: 1px solid transparent;
 	color: #292929;
 	text-decoration: none;
 	padding: 0.5rem;
 }
 
-a:hover,
-a:active,
-a.active {
+.nav-links a:hover,
+.nav-links a:active,
+.nav-links a.active {
 	background: #f8df00;
 	border-color: #292929;
 	color: #292929;
 }
 
-button {
+.nav-links button {
 	cursor: pointer;
 	border: 1px solid #292929;
 	color: #292929;
@@ -38,34 +38,38 @@ button {
 	font: inherit;
 }
 
-button:focus {
+.nav-links button:focus {
 	outline: none;
 }
 
-button:hover,
-button:active {
+.nav-links button:hover,
+.nav-links button:active {
 	background: #292929;
 	color: white;
 }
 
 @media (min-width: 768px) {
-	li {
+	.nav-links {
+		flex-direction: row;
+	}
+
+	.nav-links li {
 		margin: 0 0.5rem;
 	}
 
-	a {
+	.nav-links a {
 		color: white;
 		text-decoration: none;
 	}
 
-	button {
+	.nav-links button {
 		border: 1px solid white;
 		color: white;
 		background: transparent;
 	}
 
-	button:hover,
-	button:active {
+	.nav-links button:hover,
+	.nav-links button:active {
 		background: #f8df00;
 		color: #292929;
 	}
