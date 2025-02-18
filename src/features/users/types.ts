@@ -5,4 +5,4 @@ export interface UserType {
     placeCount: number
 }
 
-export type UsersType = Array<UserType>;
+export type UserTypeArray = Array<UserType>;

@@ -1,7 +1,7 @@
 import { CSSProperties, PropsWithChildren } from "react";
 
 interface CardProps {
-    className: string;
+    className?: string;
     style?: CSSProperties
 }
 

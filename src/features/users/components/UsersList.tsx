@@ -1,11 +1,14 @@
-import { UsersType } from "@/features/users/types";
+import { UserTypeArray } from "@/features/users/types";
 import UserItem from "@/features/users/components/UserItem";
+import Card from "@/shared/components/UIElements/Card";
 
-const UsersList = ({ users }: { users: UsersType }) => {
+const UsersList = ({ users }: { users: UserTypeArray }) => {
     if (users.length === 0) {
         return (
             <div>
-                <h2>No users found.</h2>
+                <Card>
+                    <h2>No users found.</h2>
+                </Card>
             </div>
         )
     }
