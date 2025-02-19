@@ -12,3 +12,7 @@ export interface PlaceType {
 }
 
 export type PlaceTypeArray = Array<PlaceType>;
+
+export interface PlacesRouteParams {
+    userId: string;
+}
