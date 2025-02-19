@@ -1,6 +1,15 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap");
 @import "tailwindcss";
 
+@layer base {
+	h2 {
+		@apply text-2xl font-bold;
+	}
+	h3 {
+		@apply text-lg font-bold;
+	}
+}
+
 * {
 	box-sizing: border-box;
 }

@@ -1,10 +1,16 @@
 import { UserTypeArray } from "@/features/users/types";
 import UsersList from "@/features/users/components/UsersList";
 
+const USERS: UserTypeArray = [
+    {
+        id: 'u1',
+        name: 'Ric Mershon',
+        imageUrl: 'https://images.pexels.com/photos/839011/pexels-photo-839011.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+        placeCount: 3
+    }
+];
+
 const Users = () => {
-    const USERS: UserTypeArray = [{
-        id: 'u1', name: 'Ric Mershon', image: "https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI", placeCount: 3
-    }];
 
     return (
         <UsersList users={USERS}/>
