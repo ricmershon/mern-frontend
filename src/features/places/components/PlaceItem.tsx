@@ -1,5 +1,6 @@
 import { PlaceType } from "@/features/places/types";
 import Card from "@/shared/components/UIElements/Card";
+import Button from "@/shared/components/FormElements/Button";
 
 const PlacesItem = ({ place }: { place: PlaceType }) => (
     <li className="mx-4 my-0">
@@ -13,9 +14,9 @@ const PlacesItem = ({ place }: { place: PlaceType }) => (
                 <p className="m-0 mb-2">{place.description}</p>
             </div>
             <div className="p-4 text-center border-t border-[#ccc]">
-                <button className="m-2">VIEW ON MAP</button>
-                <button className="m-2">EDIT</button>
-                <button className="m-2">DELETE</button>
+                <Button inverse>VIEW ON MAP</Button>
+                <Button to={`/places/${place.id}`}>EDIT</Button>
+                <Button danger>DELETE</Button>
             </div>
         </Card>
     </li>
