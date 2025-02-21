@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 
 import PlacesList from "@/features/places/components/PlacesList";
-import { PlacesRouteParams, PlaceTypeArray } from "../types";
+import { PlacesRouterParams, PlaceTypeArray } from "@/features/places/types";
 
 const PLACES: PlaceTypeArray = [
     {
@@ -31,7 +31,7 @@ const PLACES: PlaceTypeArray = [
 ];
 
 const UserPlaces = () => {
-    const params: PlacesRouteParams = useParams();
+    const params: PlacesRouterParams = useParams();
     const placesToLoad = PLACES.filter((place) => (
         place.creator === params.userId
     ));

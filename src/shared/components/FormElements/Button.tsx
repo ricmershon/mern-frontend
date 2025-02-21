@@ -1,4 +1,4 @@
-import { MouseEventHandler, PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
 import './Buttons.css';
@@ -11,7 +11,7 @@ interface ButtonProps {
     to?: string;
     exact?: boolean;
     type?: "submit" | "reset" | "button" | undefined;
-    onClick?: MouseEventHandler;
+    onClick?: () => void;
     disabled?: boolean;
 }
 

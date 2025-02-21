@@ -1,3 +1,8 @@
+export interface Location {
+    lat: number;
+    lng: number;
+}
+
 export interface PlaceType {
     id: string;
     imageUrl: string;
@@ -5,14 +10,11 @@ export interface PlaceType {
     description: string;
     address: string;
     creator: string;
-    location: {
-        lat: number;
-        lng: number;
-    };
+    location: Location;
 }
 
 export type PlaceTypeArray = Array<PlaceType>;
 
-export interface PlacesRouteParams {
+export interface PlacesRouterParams {
     userId: string;
 }
