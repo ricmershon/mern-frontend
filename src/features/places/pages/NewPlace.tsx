@@ -1,4 +1,5 @@
 import Input from "@/shared/components/FormElements/Input";
+import { ValidatorRequire } from "@/shared/utils/validators";
 
 const NewPlace = () => {
     return (
@@ -10,7 +11,7 @@ const NewPlace = () => {
                 inputType="input"
                 type="text"
                 label="Title"
-                validators={[]}
+                validators={[ValidatorRequire()]}
                 // onChange={}
                 errorText="Please enter a valid title."
             />
