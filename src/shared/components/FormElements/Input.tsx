@@ -1,20 +1,19 @@
-import { ChangeEvent, useReducer } from "react";
+import { useEffect, useReducer, ChangeEvent } from "react";
 
 import { Validate } from "@/shared/utils/validators";
-import { InputValidators } from "@/shared/types";
+import { InputValidators } from "@/shared/utils/validators";
+import { InputType } from "./types";
 
-interface InputState {
-    value: string,
-    isValid: boolean;
+interface InputState extends InputType {
     isTouched: boolean;
 }
 
-type Action =
+type InputAction =
     | { type: 'CHANGE', value: string, validators: InputValidators }
     | { type: 'BLUR' }
 
 
-const inputReducer = (state: InputState, action: Action) => {
+const inputReducer = (state: InputState, action: InputAction) => {
     switch (action.type) {
         case 'CHANGE':
             return {
@@ -33,23 +32,29 @@ const inputReducer = (state: InputState, action: Action) => {
 }
 
 interface InputProps {
-    inputType: string;
-    id?: string;
-    type: string;
+    inputType?: string;
+    id: string;
+    type?: string;
     label: string;
     placeholder?: string;
     rows?: number;
-    onChange?: () => void;
+    onChange: (id: string, value: string, isValid: boolean) => void;
     validators: InputValidators;
     errorText?: string;
 }
 
-const Input = ({ inputType, id, type, label, placeholder, rows, errorText, validators }: InputProps) => {
+const Input = ({ inputType, id, type, label, placeholder, rows, errorText, validators, onChange }: InputProps) => {
     const [inputState, dispatch] = useReducer(inputReducer, {
         value: '',
         isValid: false,
         isTouched: false
     });
+
+    const { value, isValid } = inputState;
+
+    useEffect(() => {
+        onChange(id, value, isValid);
+    }, [id, value, isValid, onChange]);
 
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         dispatch({

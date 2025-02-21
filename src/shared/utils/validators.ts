@@ -1,3 +1,8 @@
+export type InputValidators = Array<{
+    type: string;
+    value?: number | string;
+}>;
+
 const VALIDATOR_TYPE_REQUIRE = 'REQUIRE';
 const VALIDATOR_TYPE_MINLENGTH = 'MINLENGTH';
 const VALIDATOR_TYPE_MAXLENGTH = 'MAXLENGTH';
@@ -20,7 +25,7 @@ export const ValidatorMin = (val) => ({ type: VALIDATOR_TYPE_MIN, val: val });
 export const ValidatorMax = (val) => ({ type: VALIDATOR_TYPE_MAX, val: val });
 export const ValidatorEmail = () => ({ type: VALIDATOR_TYPE_EMAIL });
 
-export const Validate = (value, validators) => {
+export const Validate = (value, validators: InputValidators) => {
     let isValid = true;
     for (const validator of validators) {
         if (validator.type === VALIDATOR_TYPE_REQUIRE) {
