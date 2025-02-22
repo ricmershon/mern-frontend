@@ -1,17 +1,12 @@
 import { useReducer, useCallback } from "react";
-import { InputType } from "../components/FormElements/types";
-
-interface PlaceState {
-    inputs: { [key: string]: InputType };
-    isValid: boolean;
-}
+import { FormState, InputType } from "../types";
 
 interface FormAction extends InputType {
     type: 'INPUT_CHANGE',
     inputId: string;
 }
 
-const formReducer = (state: PlaceState, action: FormAction) => {
+const formReducer = (state: FormState, action: FormAction) => {
     switch (action.type) {
         case 'INPUT_CHANGE': {
             let formIsValid = true;
@@ -41,7 +36,7 @@ const formReducer = (state: PlaceState, action: FormAction) => {
 }
 
 const useForm = (initialInputs: { [key: string]: InputType; }, initialValidity: boolean) => {
-    const [placeState, dispatch] = useReducer(formReducer, {
+    const [formState, dispatch] = useReducer(formReducer, {
         inputs: initialInputs,
         isValid: initialValidity
     });
@@ -55,8 +50,7 @@ const useForm = (initialInputs: { [key: string]: InputType; }, initialValidity: 
         });
     }, []);
     
-    return [placeState, handleInputChange];
-
+    return [formState, handleInputChange];
 }
 
 export default useForm;

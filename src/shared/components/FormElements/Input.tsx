@@ -2,7 +2,7 @@ import { useEffect, useReducer, ChangeEvent } from "react";
 
 import { Validate } from "@/shared/utils/validators";
 import { InputValidators } from "@/shared/utils/validators";
-import { InputType } from "./types";
+import { InputType } from "../../types";
 
 interface InputState extends InputType {
     isTouched: boolean;
@@ -12,6 +12,7 @@ type InputAction =
     | { type: 'CHANGE', value: string, validators: InputValidators }
     | { type: 'BLUR' }
 
+export type InputChangeHandler = (id: string, value: string, isValid: boolean) => void;
 
 const inputReducer = (state: InputState, action: InputAction) => {
     switch (action.type) {
@@ -36,19 +37,31 @@ interface InputProps {
     id: string;
     type?: string;
     label: string;
-    inputValue?: string;
-    valid?: boolean;
+    initialValue?: string;
+    initialValid?: boolean;
     placeholder?: string;
     rows?: number;
-    onChange: (id: string, value: string, isValid: boolean) => void;
+    onChange: InputChangeHandler;
     validators: InputValidators;
     errorText?: string;
 }
 
-const Input = ({ inputType, id, type, label, placeholder, inputValue, valid, rows, errorText, validators, onChange }: InputProps) => {
+const Input = ({
+    inputType,
+    id,
+    type,
+    label,
+    placeholder,
+    initialValue,
+    initialValid,
+    rows,
+    errorText,
+    validators,
+    onChange
+}: InputProps) => {
     const [inputState, dispatch] = useReducer(inputReducer, {
-        value: inputValue || '',
-        isValid: valid || false,
+        value: initialValue || '',
+        isValid: initialValid || false,
         isTouched: false
     });
 
@@ -87,7 +100,6 @@ const Input = ({ inputType, id, type, label, placeholder, inputValue, valid, row
             value={inputState.value}
         />
     );
-
 
     return (
         <div className={`my-4 mx-0 ${!inputState.isValid && inputState.isTouched && 'text-red-500'}`}>

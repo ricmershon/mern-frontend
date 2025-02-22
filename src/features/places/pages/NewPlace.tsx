@@ -1,23 +1,20 @@
 import { FormEvent } from "react";
 
+import { FormState } from "@/shared/types";
 import { ValidatorMinLength, ValidatorRequire } from "@/shared/utils/validators";
 import useForm from "@/shared/hooks/UseForm";
-import Input from "@/shared/components/FormElements/Input";
+import Input, { InputChangeHandler } from "@/shared/components/FormElements/Input";
 import Button from "@/shared/components/FormElements/Button";
 
-
-
-
 const NewPlace = () => {
-    const [placeState, handleInputChange] = useForm({
+    const [formState, handleInputChange] = useForm({
         title: { value: '', isValid: false },
         description: { value: '', isValid: false }
     }, false);
 
-
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log("^^^ INPUTS ^^^\n", placeState.inputs);
+        console.log("^^^ NEW PLACE ^^^\n", formState);
     }
 
     return (
@@ -31,7 +28,7 @@ const NewPlace = () => {
                 type="text"
                 label="Title"
                 validators={[ValidatorRequire()]}
-                onChange={handleInputChange}
+                onChange={handleInputChange as InputChangeHandler}
                 errorText="Please enter a valid title."
             />
             <Input
@@ -39,7 +36,7 @@ const NewPlace = () => {
                 inputType="textarea"
                 label="Description"
                 validators={[ValidatorMinLength(5)]}
-                onChange={handleInputChange}
+                onChange={handleInputChange as InputChangeHandler}
                 errorText="Please enter a valid description with at least 5 characters."
             />
             <Input
@@ -47,10 +44,10 @@ const NewPlace = () => {
                 inputType="input"
                 label="Address"
                 validators={[ValidatorRequire()]}
-                onChange={handleInputChange}
+                onChange={handleInputChange as InputChangeHandler}
                 errorText="Please enter a valid address."
             />
-            <Button type="submit" disabled={!placeState.isValid}>ADD PLACE</Button>
+            <Button type="submit" disabled={!(formState as FormState).isValid}>ADD PLACE</Button>
         </form>
     )
 }
