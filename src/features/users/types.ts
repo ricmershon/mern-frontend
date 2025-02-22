@@ -4,5 +4,3 @@ export interface UserType {
     imageUrl: string;
     placeCount: number;
 }
-
-export type UserTypeArray = Array<UserType>;

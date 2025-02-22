@@ -1,11 +1,11 @@
 import { FormEvent, useCallback, useReducer } from "react";
 
-import { InputType } from "@/shared/components/FormElements/types";
 import { ValidatorMinLength, ValidatorRequire } from "@/shared/utils/validators";
+import { InputType } from "@/shared/components/FormElements/types";
 import Input from "@/shared/components/FormElements/Input";
 import Button from "@/shared/components/FormElements/Button";
 
-interface FormState {
+interface PlaceState {
     inputs: { [key: string]: InputType };
     isValid: boolean;
 }
@@ -15,7 +15,7 @@ interface FormAction extends InputType {
     inputId: string;
 }
 
-const formReducer = (state: FormState, action: FormAction) => {
+const formReducer = (state: PlaceState, action: FormAction) => {
     switch (action.type) {
         case 'INPUT_CHANGE': {
             let formIsValid = true;
@@ -45,16 +45,10 @@ const formReducer = (state: FormState, action: FormAction) => {
 }
 
 const NewPlace = () => {
-    const [formState, dispatch] = useReducer(formReducer, {
+    const [placeState, dispatch] = useReducer(formReducer, {
         inputs: {
-            title: {
-                value: '',
-                isValid: false
-            },
-            description: {
-                value: '',
-                isValid: false
-            }
+            title: { value: '', isValid: false },
+            description: { value: '', isValid: false }
         },
         isValid: false
     });
@@ -70,13 +64,13 @@ const NewPlace = () => {
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log("^^^ INPUTS ^^^\n", formState.inputs);
+        console.log("^^^ INPUTS ^^^\n", placeState.inputs);
     }
 
     return (
         <form
             onSubmit={handleSubmit}
-            className="list-none my-0 mx-auto p-4 w-[90%] max-w-[40rem] shadow-[0_2px_8px_rgba(0,0,0,0.26)] rounded-md bg-white"
+            className="place-form"
         >
             <Input
                 id="title"
@@ -103,7 +97,7 @@ const NewPlace = () => {
                 onChange={handleInputChange}
                 errorText="Please enter a valid address."
             />
-            <Button type="submit" disabled={!formState.isValid}>ADD PLACE</Button>
+            <Button type="submit" disabled={!placeState.isValid}>ADD PLACE</Button>
         </form>
     )
 }

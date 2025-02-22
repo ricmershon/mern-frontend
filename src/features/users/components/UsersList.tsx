@@ -1,11 +1,11 @@
-import { UserTypeArray } from "@/features/users/types";
+import { UserType } from "@/features/users/types";
 import UserItem from "@/features/users/components/UserItem";
 import Card from "@/shared/components/UIElements/Card";
 
-const UsersList = ({ users }: { users: UserTypeArray }) => (
+const UsersList = ({ users }: { users: Array<UserType> }) => (
     <>
         {users.length === 0 ? (
-            <div className="text-center flex justify-center items-center">
+            <div className="center-content">
                 <Card>
                     <h2>No users found.</h2>
                 </Card>

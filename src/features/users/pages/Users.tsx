@@ -1,7 +1,7 @@
-import { UserTypeArray } from "@/features/users/types";
+import { UserType } from "@/features/users/types";
 import UsersList from "@/features/users/components/UsersList";
 
-const USERS: UserTypeArray = [
+const USERS: Array<UserType> = [
     {
         id: 'u1',
         name: 'Ric Mershon',

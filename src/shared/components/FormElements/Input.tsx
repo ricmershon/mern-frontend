@@ -36,6 +36,8 @@ interface InputProps {
     id: string;
     type?: string;
     label: string;
+    inputValue?: string;
+    valid?: boolean;
     placeholder?: string;
     rows?: number;
     onChange: (id: string, value: string, isValid: boolean) => void;
@@ -43,10 +45,10 @@ interface InputProps {
     errorText?: string;
 }
 
-const Input = ({ inputType, id, type, label, placeholder, rows, errorText, validators, onChange }: InputProps) => {
+const Input = ({ inputType, id, type, label, placeholder, inputValue, valid, rows, errorText, validators, onChange }: InputProps) => {
     const [inputState, dispatch] = useReducer(inputReducer, {
-        value: '',
-        isValid: false,
+        value: inputValue || '',
+        isValid: valid || false,
         isTouched: false
     });
 

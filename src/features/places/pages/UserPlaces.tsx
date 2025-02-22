@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom";
 
+import { RouterParams } from "@/types";
+import { PlaceType } from "@/features/places/types";
 import PlacesList from "@/features/places/components/PlacesList";
-import { PlacesRouterParams, PlaceTypeArray } from "@/features/places/types";
 
-const PLACES: PlaceTypeArray = [
+const PLACES: Array<PlaceType> = [
     {
         id: 'p1',
         title: 'Empire State Building',
@@ -31,7 +32,8 @@ const PLACES: PlaceTypeArray = [
 ];
 
 const UserPlaces = () => {
-    const params: PlacesRouterParams = useParams();
+    const params: RouterParams = useParams();
+    
     const placesToLoad = PLACES.filter((place) => (
         place.creator === params.userId
     ));

@@ -12,9 +12,3 @@ export interface PlaceType {
     creator: string;
     location: Location;
 }
-
-export type PlaceTypeArray = Array<PlaceType>;
-
-export interface PlacesRouterParams {
-    userId: string;
-}
