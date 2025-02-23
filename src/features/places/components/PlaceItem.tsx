@@ -28,7 +28,7 @@ const PlacesItem = ({ place }: { place: PlaceType }) => {
                     <Map center={place.location} zoom={16} />
                 </div>
             </Modal>
-            <li className="mx-4 my-0">
+            <li className="mx-4 mb-4 my-0">
                 <Card className="p-0 bg-white">
                     <div className="w-full h-[12.5rem] mr-[1.5rem] md:h-80">
                         <img className="w-full h-full object-cover" src={place.imageUrl} alt={place.title} />

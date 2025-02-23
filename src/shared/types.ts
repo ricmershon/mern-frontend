@@ -1,8 +1,3 @@
-// export interface InputType {
-//     value: string;
-//     isValid: boolean
-// }
-
 export interface FieldInput {
     value: string;
     isValid: boolean

@@ -2,12 +2,13 @@ import { useEffect, FormEvent, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { RouterParams } from "@/types";
-import { PlaceType } from "../types";
+import { PlaceType} from '@/features/places/types'
 import { FormState } from "@/shared/types";
 import useForm, { LoadFormHandler } from "@/shared/hooks/UseForm";
 import { ValidatorRequire, ValidatorMinLength } from "@/shared/utils/validators";
 import Input, { InputChangeHandler } from "@/shared/components/FormElements/Input";
 import Button from "@/shared/components/FormElements/Button";
+import Card from "@/shared/components/UIElements/Card";
 
 const PLACES: Array<PlaceType> = [
     {
@@ -24,7 +25,7 @@ const PLACES: Array<PlaceType> = [
     },
     {
         id: 'p2',
-        title: 'Empire State Building',
+        title: 'plop State Building',
         description: 'One of the most famous sky scrapers in the world!',
         imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/NYC_Empire_State_Building.jpg/640px-NYC_Empire_State_Building.jpg',
         address: '20 W 34th St, New York, NY 10001',
@@ -36,7 +37,7 @@ const PLACES: Array<PlaceType> = [
     }
 ];
 
-const UpdatePlace = (props) => {
+const UpdatePlace = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     const params: RouterParams = useParams();
@@ -50,16 +51,28 @@ const UpdatePlace = (props) => {
     }, false);
 
     useEffect(() => {
-        (loadFormData as LoadFormHandler)({
-            title: { value: selectedPlace!.title, isValid: true },
-            description: { value: selectedPlace!.description, isValid: true }
-        }, true);
+        if (selectedPlace) {
+            (loadFormData as LoadFormHandler)({
+                title: { value: selectedPlace!.title, isValid: true },
+                description: { value: selectedPlace!.description, isValid: true }
+            }, true);
+        }
         setIsLoading(false);
     }, [loadFormData, selectedPlace]);
     
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log("^^^ STATE ^^^\n", formState);
+    }
+
+    if (!selectedPlace) {
+        return (
+            <div className='center'>
+                <Card>
+                    <h2>Could not find place!</h2>
+                </Card>
+            </div>
+        )
     }
 
     return (
