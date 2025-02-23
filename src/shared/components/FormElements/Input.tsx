@@ -2,14 +2,14 @@ import { useEffect, useReducer, ChangeEvent } from "react";
 
 import { Validate } from "@/shared/utils/validators";
 import { InputValidators } from "@/shared/utils/validators";
-import { InputType } from "../../types";
+import { FieldInput } from "../../types";
 
-interface InputState extends InputType {
+interface InputState extends FieldInput {
     isTouched: boolean;
 }
 
 type InputAction =
-    | { type: 'CHANGE', value: string, validators: InputValidators }
+    { type: 'CHANGE', value: string, validators: InputValidators }
     | { type: 'BLUR' }
 
 export type InputChangeHandler = (id: string, value: string, isValid: boolean) => void;

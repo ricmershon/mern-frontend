@@ -1,9 +1,16 @@
-export interface InputType {
+// export interface InputType {
+//     value: string;
+//     isValid: boolean
+// }
+
+export interface FieldInput {
     value: string;
     isValid: boolean
 }
 
+export type FormInputs = { [key: string]: FieldInput }
+
 export interface FormState {
-    inputs: { [key: string]: InputType };
+    inputs: FormInputs;
     isValid: boolean;
 }

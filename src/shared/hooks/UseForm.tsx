@@ -1,10 +1,11 @@
 import { useReducer, useCallback } from "react";
-import { FormState, InputType } from "../types";
+import { FormState, FormInputs } from "../types";
 
-interface FormAction extends InputType {
-    type: 'INPUT_CHANGE',
-    inputId: string;
-}
+type FormAction =
+    { type: 'INPUT_CHANGE', inputId: string, value: string, isValid: boolean }
+    | { type: 'LOAD_DATA', inputs: FormInputs, formIsValid: boolean };
+
+export type LoadFormHandler = (inputData: FormInputs, formIsValid: boolean) => void;
 
 const formReducer = (state: FormState, action: FormAction) => {
     switch (action.type) {
@@ -17,7 +18,6 @@ const formReducer = (state: FormState, action: FormAction) => {
                     formIsValid = formIsValid && state.inputs[inputId].isValid;
                 }
             }
-
             return {
                 ...state,
                 inputs: {
@@ -30,12 +30,19 @@ const formReducer = (state: FormState, action: FormAction) => {
                 isValid: formIsValid
             }
         }
+
+        case 'LOAD_DATA': 
+            return {
+                inputs: action.inputs,
+                isValid: action.formIsValid
+            }
+
         default:
             return state
     }
 }
 
-const useForm = (initialInputs: { [key: string]: InputType; }, initialValidity: boolean) => {
+const useForm = (initialInputs: FormInputs, initialValidity: boolean) => {
     const [formState, dispatch] = useReducer(formReducer, {
         inputs: initialInputs,
         isValid: initialValidity
@@ -49,8 +56,16 @@ const useForm = (initialInputs: { [key: string]: InputType; }, initialValidity: 
             inputId: id
         });
     }, []);
+
+    const loadFormData = useCallback((inputData: FormInputs, formValidity: boolean) => {
+        dispatch({
+            type: 'LOAD_DATA',
+            inputs: inputData,
+            formIsValid: formValidity
+        })
+    }, [])
     
-    return [formState, handleInputChange];
+    return [formState, handleInputChange, loadFormData];
 }
 
 export default useForm;
