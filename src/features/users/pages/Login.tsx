@@ -1,16 +1,39 @@
-import { FormEvent } from "react";
+import { useState, FormEvent } from "react";
 
-import { ValidatorMinLength, ValidatorEmail } from "@/shared/utils/validators";
+import { ValidatorMinLength, ValidatorEmail, ValidatorRequire } from "@/shared/utils/validators";
 import useForm from "@/shared/hooks/UseForm";
 import Card from "@/shared/components/UIElements/Card";
 import Input from "@/shared/components/FormElements/Input";
 import Button from "@/shared/components/FormElements/Button";
 
 const Login = () => {
-    const [formState, handleInputChange] = useForm({
+    const [isLoginMode, setIsLoginMode] = useState(true);
+
+    const [formState, handleInputChange, loadFormData] = useForm({
         email: { value: '', isValid: false },
         password: { value: '', isValid: false }
     }, false);
+
+    const handleModeSwitch = () => {
+        if (!isLoginMode) {
+            if ('name' in formState) {
+                delete formState['name']
+            };
+            loadFormData(
+                { ...formState.inputs },
+                formState.inputs.email.isValid && formState.inputs.password.isValid
+            );
+        } else {
+            loadFormData(
+                {
+                    ...formState.inputs,
+                    name: { value: '', isValid: false }
+                },
+                false
+            );
+        }
+        setIsLoginMode((prevState) => !prevState)
+    }
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -18,13 +41,23 @@ const Login = () => {
     }
 
     return (
-        <Card className="w-9/10 max-w-[25rem] my-28 mx-auto text-center">
-            <h2>Login Required</h2>
+        <Card className="w-9/10 max-w-[25rem] my-28 py-8 px-6 mx-auto text-center bg-white">
+            <h2 className="mb-4">Login Required</h2>
             <hr />
             <form
                 onSubmit={handleSubmit}
-                className="mb-4"
             >
+                {!isLoginMode && (
+                    <Input
+                        id="name"
+                        inputType="input"
+                        type="text"
+                        label="Name"
+                        validators={[ValidatorRequire()]}
+                        onChange={handleInputChange}
+                        errorText="Please enter a name."
+                    />
+                )}
                 <Input
                     id="email"
                     inputType="input"
@@ -38,13 +71,18 @@ const Login = () => {
                     id="password"
                     inputType="input"
                     type="password"
-                    label="password"
+                    label="Password"
                     validators={[ValidatorMinLength(6)]}
                     onChange={handleInputChange}
                     errorText="Please enter a valid password with at least 6 characters."
                 />
-                <Button type="submit" disabled={!formState.isValid}>LOGIN</Button>
+                <Button type="submit" disabled={!formState.isValid}>
+                    {isLoginMode ? "LOGIN" : "SIGNUP"}
+                </Button>
             </form>
+            <Button inverse={true} onClick={handleModeSwitch}>
+                SWITCH TO {isLoginMode ? "SIGNUP" : "LOGIN"}
+            </Button>
         </Card>
     );
 }

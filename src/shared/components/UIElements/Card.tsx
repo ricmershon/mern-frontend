@@ -7,7 +7,7 @@ interface CardProps {
 
 const Card = ({ className, style, children }: PropsWithChildren<CardProps>) => (
     <div
-        className={`m-0 shadow-[0_2px_8px_rgba(0,0,0,0.26)] rounded-md p-4 bg-white overflow-hidden ${className}`}
+        className={`m-0 shadow-[0_2px_8px_rgba(0,0,0,0.26)] rounded-md overflow-hidden ${className}`}
         style={style}
     >
         {children}
