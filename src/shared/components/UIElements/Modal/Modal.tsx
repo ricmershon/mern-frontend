@@ -6,7 +6,7 @@ export interface ModalProps {
     show: boolean;
     onCancel: () => void;
     header: string;
-    contentClass: string;
+    contentClass?: string;
     footerClass: string;
     footer: JSX.Element;
 }

@@ -56,7 +56,7 @@ const Button = ({
         <button
             className={`button button--${size || 'default'} ${inverse &&
                 'button--inverse'} ${danger && 'button--danger'}`}
-            type={type}
+            type={type || "button"}
             onClick={onClick}
             disabled={disabled}
         >
