@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import { RouterParams } from "@/types";
 import { PlaceType} from '@/features/places/types'
-import useForm from "@/shared/hooks/UseForm";
+import useForm from "@/shared/hooks/use-form";
 import { ValidatorRequire, ValidatorMinLength } from "@/shared/utils/validators";
 import Input from "@/shared/components/FormElements/Input";
 import Button from "@/shared/components/FormElements/Button";

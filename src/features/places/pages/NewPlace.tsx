@@ -1,7 +1,7 @@
 import { FormEvent } from "react";
 
 import { ValidatorMinLength, ValidatorRequire } from "@/shared/utils/validators";
-import useForm from "@/shared/hooks/UseForm";
+import useForm from "@/shared/hooks/use-form";
 import Input from "@/shared/components/FormElements/Input";
 import Button from "@/shared/components/FormElements/Button";
 
