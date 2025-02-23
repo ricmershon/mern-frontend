@@ -1,5 +1,6 @@
 import { useReducer, useCallback } from "react";
 import { FormState, FormInputs } from "../types";
+import { InputChangeHandler } from "../components/FormElements/Input";
 
 type FormAction =
     { type: 'INPUT_CHANGE', inputId: string, value: string, isValid: boolean }
@@ -42,7 +43,13 @@ const formReducer = (state: FormState, action: FormAction) => {
     }
 }
 
-const useForm = (initialInputs: FormInputs, initialValidity: boolean) => {
+const useForm = (
+    initialInputs: FormInputs, initialValidity: boolean
+): [
+    formState: FormState,
+    handleInputChange: InputChangeHandler,
+    loadFormData: LoadFormHandler
+] => {
     const [formState, dispatch] = useReducer(formReducer, {
         inputs: initialInputs,
         isValid: initialValidity

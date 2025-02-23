@@ -3,10 +3,9 @@ import { useParams } from "react-router-dom";
 
 import { RouterParams } from "@/types";
 import { PlaceType} from '@/features/places/types'
-import { FormState } from "@/shared/types";
-import useForm, { LoadFormHandler } from "@/shared/hooks/UseForm";
+import useForm from "@/shared/hooks/UseForm";
 import { ValidatorRequire, ValidatorMinLength } from "@/shared/utils/validators";
-import Input, { InputChangeHandler } from "@/shared/components/FormElements/Input";
+import Input from "@/shared/components/FormElements/Input";
 import Button from "@/shared/components/FormElements/Button";
 import Card from "@/shared/components/UIElements/Card";
 
@@ -52,7 +51,7 @@ const UpdatePlace = () => {
 
     useEffect(() => {
         if (selectedPlace) {
-            (loadFormData as LoadFormHandler)({
+            loadFormData({
                 title: { value: selectedPlace!.title, isValid: true },
                 description: { value: selectedPlace!.description, isValid: true }
             }, true);
@@ -91,10 +90,10 @@ const UpdatePlace = () => {
                         type="text"
                         label="Title"
                         validators={[ValidatorRequire()]}
-                        onChange={handleInputChange as InputChangeHandler}
+                        onChange={handleInputChange}
                         errorText="Please enter a valid title."
-                        initialValue={(formState as FormState).inputs.title.value}
-                        initialValid={(formState as FormState).inputs.title.isValid}
+                        initialValue={formState.inputs.title.value}
+                        initialValid={formState.inputs.title.isValid}
                     >
                     </Input>
                     <Input
@@ -103,18 +102,17 @@ const UpdatePlace = () => {
                         type="text"
                         label="Description"
                         validators={[ValidatorMinLength(5)]}
-                        onChange={handleInputChange as InputChangeHandler}
+                        onChange={handleInputChange}
                         errorText="Please enter a valid description with at least 5 characters."
-                        initialValue={(formState as FormState).inputs.description.value}
-                        initialValid={(formState as FormState).inputs.description.isValid}
+                        initialValue={formState.inputs.description.value}
+                        initialValid={formState.inputs.description.isValid}
                     >
                     </Input>
-                    <Button type="submit" disabled={!(formState as FormState).isValid}>UPDATE PLACE</Button>
+                    <Button type="submit" disabled={!formState.isValid}>UPDATE PLACE</Button>
                 </form>
             )}
         </>
-    )
-    return <h1>Hello update place</h1>
+    );
 }
 
 export default UpdatePlace;
