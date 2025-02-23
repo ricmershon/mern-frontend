@@ -5,6 +5,7 @@ import Users from '@/features/users/pages/Users';
 import NewPlace from '@/features/places/pages/NewPlace';
 import UserPlaces from '@/features/places/pages/UserPlaces';
 import UpdatePlace from '@/features/places/pages/UpdatePlace';
+import Login from '@/features/users/pages/Login';
 
 const App = () => {
     return (
@@ -21,8 +22,11 @@ const App = () => {
                     <Route path='/places/new' exact={true}>
                         <NewPlace />
                     </Route>
-                    <Route path='/places/:placeId' exact={true}>
+                    <Route path='/places/:placeId'>
                         <UpdatePlace />
+                    </Route>
+                    <Route path='/login'>
+                        <Login />
                     </Route>
                     <Redirect to='/' />
                 </Switch>

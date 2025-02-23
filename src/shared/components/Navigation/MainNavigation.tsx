@@ -21,25 +21,27 @@ const MainNavigation = () => {
                 </SideDrawer>
             )}
             <MainHeader>
-                <button
-                    className="flex flex-col justify-around w-[3rem] h-[3rem] bg-transparent border-[none] mr-8 cursor-pointer md:hidden"
-                    onClick={() => setDrawerIsOpen(true)}
-                >
-                    <span />
-                    <span />
-                    <span />
-                </button>
-                <h1 className="text-white text-2xl font-bold">
-                    <Link
-                        to='/'
-                        className="text-white no-underline"
+                <>
+                    <button
+                        className="flex flex-col justify-around w-[3rem] h-[3rem] bg-transparent border-[none] mr-8 cursor-pointer md:hidden"
+                        onClick={() => setDrawerIsOpen(true)}
                     >
-                        Your Places
-                    </Link>
-                </h1>
-                <nav className="hidden md:block">
-                    <NavLinks />
-                </nav>
+                        <span />
+                        <span />
+                        <span />
+                    </button>
+                    <h1 className="text-white text-2xl font-bold">
+                        <Link
+                            to='/'
+                            className="text-white no-underline"
+                        >
+                            Your Places
+                        </Link>
+                    </h1>
+                    <nav className="hidden md:block">
+                        <NavLinks />
+                    </nav>
+                </>
             </MainHeader>
         </>
     );
