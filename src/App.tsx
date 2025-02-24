@@ -20,6 +20,43 @@ const App = () => {
         setIsLoggedIn(false);
     }, []);
 
+    let routes;
+
+    if (isLoggedIn) {
+        routes = (
+            <Switch>
+                <Route path='/' exact={true}>
+                <Users />
+                    </Route>
+                <Route path='/:userId/places' exact={true}>
+                    <UserPlaces />
+                </Route>
+                <Route path='/places/new' exact={true}>
+                    <NewPlace />
+                </Route>
+                <Route path='/places/:placeId'>
+                    <UpdatePlace />
+                </Route>
+                <Redirect to='/' />
+            </Switch>
+        )
+    } else {
+        routes = (
+            <Switch>
+                <Route path='/' exact={true}>
+                <Users />
+                    </Route>
+                <Route path='/:userId/places' exact={true}>
+                    <UserPlaces />
+                </Route>
+                <Route path='/login'>
+                    <Login />
+                </Route>
+                <Redirect to='/login' />
+            </Switch>
+        )
+    }
+
     return (
         <LoginContext.Provider
             value={{
@@ -31,24 +68,7 @@ const App = () => {
             <Router>
                 <MainNavigation />
                 <main className='mt-[5rem]'>
-                    <Switch>
-                        <Route path='/' exact={true}>
-                            <Users />
-                        </Route>
-                        <Route path='/:userId/places' exact={true}>
-                            <UserPlaces />
-                        </Route>
-                        <Route path='/places/new' exact={true}>
-                            <NewPlace />
-                        </Route>
-                        <Route path='/places/:placeId'>
-                            <UpdatePlace />
-                        </Route>
-                        <Route path='/login'>
-                            <Login />
-                        </Route>
-                        <Redirect to='/' />
-                    </Switch>
+                    {routes}
                 </main>
             </Router>
         </LoginContext.Provider>

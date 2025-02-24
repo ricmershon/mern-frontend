@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import { useLoginContext } from "@/shared/context/login-context";
 import { PlaceType } from "@/features/places/types";
 import Modal from "@/shared/components/UIElements/Modal/Modal";
 import Card from "@/shared/components/UIElements/Card";
@@ -9,6 +10,8 @@ import Map from "@/shared/components/UIElements/Map";
 const PlacesItem = ({ place }: { place: PlaceType }) => {
     const [showMap, setShowMap] = useState(false);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+
+    const { isLoggedIn } = useLoginContext();
 
     const openMapHandler = () => setShowMap(true);
     const closeMapHandler = () => setShowMap(false);
@@ -63,8 +66,12 @@ const PlacesItem = ({ place }: { place: PlaceType }) => {
                     </div>
                     <div className="p-4 text-center border-t border-[#ccc]">
                         <Button inverse onClick={openMapHandler}>VIEW ON MAP</Button>
-                        <Button to={`/places/${place.id}`}>EDIT</Button>
-                        <Button danger onClick={openDeleteConfirmationHandler}>DELETE</Button>
+                        {isLoggedIn && (
+                            <>
+                                <Button to={`/places/${place.id}`}>EDIT</Button>
+                                <Button danger onClick={openDeleteConfirmationHandler}>DELETE</Button>
+                            </>
+                        )}
                     </div>
                 </Card>
             </li>

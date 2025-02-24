@@ -1,12 +1,15 @@
 import { useState, FormEvent } from "react";
 
 import { ValidatorMinLength, ValidatorEmail, ValidatorRequire } from "@/shared/utils/validators";
+import { useLoginContext } from "@/shared/context/login-context";
 import useForm from "@/shared/hooks/use-form";
 import Card from "@/shared/components/UIElements/Card";
 import Input from "@/shared/components/FormElements/Input";
 import Button from "@/shared/components/FormElements/Button";
 
 const Login = () => {
+    const loginContext = useLoginContext();
+
     const [isLoginMode, setIsLoginMode] = useState(true);
 
     const [formState, handleInputChange, loadFormData] = useForm({
@@ -38,6 +41,7 @@ const Login = () => {
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log('^^^ LOGGING IN ^^^\n', formState);
+        loginContext.login();
     }
 
     return (
