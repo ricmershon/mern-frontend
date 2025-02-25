@@ -2,7 +2,7 @@ import { useEffect, useReducer, ChangeEvent } from "react";
 
 import { Validate } from "@/shared/utils/validators";
 import { InputValidators } from "@/shared/utils/validators";
-import { FieldInput } from "../../types";
+import { FieldInput } from "@/shared/types";
 
 interface InputState extends FieldInput {
     isTouched: boolean;

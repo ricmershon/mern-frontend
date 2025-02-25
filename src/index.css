@@ -25,6 +25,9 @@
 	.center-content {
 		@apply text-center flex justify-center items-center;
 	}
+	.main-nav-burger-span {
+		@apply block w-12 h-[2.5px] bg-white;
+	}
 }
 
 * {

@@ -1,6 +1,6 @@
 import { useReducer, useCallback } from "react";
-import { FormState, FormInputs } from "../types";
-import { InputChangeHandler } from "../components/FormElements/Input";
+import { FormState, FormInputs } from "@/shared/types";
+import { InputChangeHandler } from "@/shared/components/FormElements/Input";
 
 type FormAction =
     { type: 'INPUT_CHANGE', inputId: string, value: string, isValid: boolean }

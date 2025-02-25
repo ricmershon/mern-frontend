@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import "./MainNavigation.css";
 import MainHeader from "./MainHeader";
 import NavLinks from "./NavLinks";
 import SideDrawer from "./SideDrawer";
@@ -26,9 +25,9 @@ const MainNavigation = () => {
                         className="flex flex-col justify-around w-[3rem] h-[3rem] bg-transparent border-[none] mr-8 cursor-pointer md:hidden"
                         onClick={() => setDrawerIsOpen(true)}
                     >
-                        <span />
-                        <span />
-                        <span />
+                        <span className="main-nav-burger-span"/>
+                        <span className="main-nav-burger-span"/>
+                        <span className="main-nav-burger-span"/>
                     </button>
                     <h1 className="text-white text-2xl font-bold">
                         <Link
