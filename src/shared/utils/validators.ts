@@ -33,13 +33,13 @@ export const Validate = (value: string | number, validators: InputValidators) =>
                 switch (validator.type) {
                     case VALIDATOR_TYPE_MINLENGTH:
                         isValid = isValid && value.trim().length >= validator.value;
-                        return;
+                        break;
                     case VALIDATOR_TYPE_MAXLENGTH:
                         isValid = isValid && value.trim().length <= validator.value;
-                        return;
+                        break;
                     case VALIDATOR_TYPE_MIN:
                         isValid = isValid && +value >= validator.value;
-                        return;
+                        break;
                     case VALIDATOR_TYPE_MAX:
                         isValid = isValid && +value <= validator.value;
                 }
