@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 
-import { RouterParams } from "@/types";
-import { PlaceType } from "@/features/places/types";
+import { RouterParams, PlaceType } from "@/types";
 import PlacesList from "@/features/places/components/PlacesList";
 
 const PLACES: Array<PlaceType> = [

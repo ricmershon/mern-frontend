@@ -1,4 +1,4 @@
-import { PlaceType } from "@/features/places/types";
+import { PlaceType } from "@/types";
 
 import Card from "@/shared/components/UIElements/Card";
 import PlacesItem from "./PlaceItem";

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { useLoginContext } from "@/shared/context/login-context";
-import { PlaceType } from "@/features/places/types";
+import { PlaceType } from "@/types";
 import Modal from "@/shared/components/UIElements/Modal/Modal";
 import Card from "@/shared/components/UIElements/Card";
 import Button from "@/shared/components/FormElements/Button";

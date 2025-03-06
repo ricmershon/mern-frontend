@@ -1,8 +1,7 @@
 import { useEffect, FormEvent, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { RouterParams } from "@/types";
-import { PlaceType} from '@/features/places/types'
+import { RouterParams, PlaceType } from "@/types";
 import useForm from "@/shared/hooks/use-form";
 import { ValidatorRequire, ValidatorMinLength } from "@/shared/utils/validators";
 import Input from "@/shared/components/FormElements/Input";

@@ -1,4 +1,4 @@
-import { UserType } from "@/features/users/types";
+import { UserType } from "@/types";
 import UserItem from "@/features/users/components/UserItem";
 import Card from "@/shared/components/UIElements/Card";
 
@@ -18,7 +18,7 @@ const UsersList = ({ users }: { users: Array<UserType> }) => (
                         id={user.id}
                         imageUrl={user.imageUrl}
                         name={user.name}
-                        placeCount={user.placeCount}
+                        placeCount={user.places ? user.places.length : 0}
                     />
                 ))}
             </ul>

@@ -3,6 +3,7 @@ import { useState, FormEvent } from "react";
 import { ValidatorMinLength, ValidatorEmail, ValidatorRequire } from "@/shared/utils/validators";
 import { useLoginContext } from "@/shared/context/login-context";
 import useForm from "@/shared/hooks/use-form";
+import useFetch from "@/shared/hooks/use-fetch";
 import Card from "@/shared/components/UIElements/Card";
 import Input from "@/shared/components/FormElements/Input";
 import Button from "@/shared/components/FormElements/Button";
@@ -13,13 +14,13 @@ const Login = () => {
     const loginContext = useLoginContext();
 
     const [isLoginMode, setIsLoginMode] = useState(true);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<null | string | object > (null);
 
     const [formState, handleInputChange, loadFormData] = useForm({
         email: { value: '', isValid: false },
         password: { value: '', isValid: false }
     }, false);
+
+    const [isLoading, error, sendRequest, clearError] = useFetch();
 
     const handleModeSwitch = () => {
         if (!isLoginMode) {
@@ -42,65 +43,47 @@ const Login = () => {
         setIsLoginMode((prevState) => !prevState)
     }
 
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         if (isLoginMode) {
             try {
-                setIsLoading(true);
-                const response = await fetch('http://localhost:5001/api/users/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
+                sendRequest(
+                    'http://localhost:5001/api/users/login',
+                    'POST',
+                    JSON.stringify({
                         email: formState.inputs.email.value,
                         password: formState.inputs.password.value
-                    })
-                });
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.message)
-                }
-                setIsLoading(false);
+                    }),
+                    { 'Content-Type': 'application/json' }
+                );
                 loginContext.login();
             } catch (error) {
-                setIsLoading(false);
-                setError(error.message || 'Something went wrong with signup.');
+                console.log(error);
             }
         } else {
             try {
-                setIsLoading(true);
-                const response = await fetch('http://localhost:5001/api/users/signup', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
+                sendRequest(
+                    'http://localhost:5001/api/users/signup',
+                    'POST',
+                    JSON.stringify({
                         name: formState.inputs.name.value,
                         email: formState.inputs.email.value,
                         password: formState.inputs.password.value,
                         imageUrl: 'someurl'
-                    })
-                });
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.message)
-                }
-                setIsLoading(false);
+                    }),
+                    { 'Content-Type': 'application/json' }
+                );
                 loginContext.login();
             } catch (error) {
-                setIsLoading(false);
-                setError(error.message || 'Something went wrong with signup.');
+                console.error(error);
             }
         }
     };
 
     return (
         <>
-            {error && <ErrorModal error={error} onClear={() => setError(null)} />}
+            {error && <ErrorModal error={error} onClear={clearError} />}
             <Card className="w-9/10 max-w-[25rem] my-28 py-8 px-6 mx-auto text-center bg-white">
                 {isLoading && <LoadingSpinner asOverlay={true} />}
                 <h2 className="mb-4">Login Required</h2>
