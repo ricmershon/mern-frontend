@@ -1,4 +1,4 @@
-import { useEffect, useReducer, ChangeEvent } from "react";
+import { useEffect, useReducer, ChangeEvent, Reducer } from "react";
 
 import { Validate } from "@/shared/utils/validators";
 import { InputValidators } from "@/shared/utils/validators";
@@ -9,7 +9,7 @@ interface InputState extends FieldInput {
 }
 
 type InputAction =
-    { type: 'CHANGE', value: string, validators: InputValidators }
+    | { type: 'CHANGE', value: string, validators: InputValidators }
     | { type: 'BLUR' }
 
 export type InputChangeHandler = (id: string, value: string, isValid: boolean) => void;
