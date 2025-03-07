@@ -24,11 +24,9 @@ const Users = () => {
 
     return (
         <>
-            {error && <ErrorModal error={error} onClear={clearError} />}
+            <ErrorModal error={error} onClear={clearError} />
             {isLoading ? (
-                <div className="center-content">
-                    <LoadingSpinner asOverlay={true} />
-                </div>
+                <LoadingSpinner asOverlay={true} />
             ) : (
                 <UsersList users={users}/>
             )}

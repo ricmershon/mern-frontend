@@ -1,7 +1,7 @@
 import { useState, FormEvent } from "react";
 
 import { ValidatorMinLength, ValidatorEmail, ValidatorRequire } from "@/shared/utils/validators";
-import { useLoginContext } from "@/shared/context/login-context";
+import { useAuthContext } from "@/shared/context/auth-context";
 import useForm from "@/shared/hooks/use-form";
 import useFetch from "@/shared/hooks/use-fetch";
 import Card from "@/shared/components/UIElements/Card";
@@ -11,16 +11,15 @@ import ErrorModal from "@/shared/components/UIElements/Modal/ErrorModal";
 import LoadingSpinner from "@/shared/components/UIElements/LoadingSpinner";
 
 const Login = () => {
-    const loginContext = useLoginContext();
-
+    const authContext = useAuthContext();
     const [isLoginMode, setIsLoginMode] = useState(true);
 
+    const [isLoading, error, sendRequest, clearError] = useFetch();
     const [formState, handleInputChange, loadFormData] = useForm({
         email: { value: '', isValid: false },
         password: { value: '', isValid: false }
     }, false);
 
-    const [isLoading, error, sendRequest, clearError] = useFetch();
 
     const handleModeSwitch = () => {
         if (!isLoginMode) {
@@ -48,7 +47,7 @@ const Login = () => {
 
         if (isLoginMode) {
             try {
-                await sendRequest(
+                const response = await sendRequest(
                     'http://localhost:5001/api/users/login',
                     'POST',
                     JSON.stringify({
@@ -57,13 +56,14 @@ const Login = () => {
                     }),
                     { 'Content-Type': 'application/json' }
                 );
-                loginContext.login();
+                console.log('### RESPONSE ###', response);
+                authContext.login(response.user.id);
             } catch (error) {
                 console.log(error);
             }
         } else {
             try {
-                await sendRequest(
+                const response = await sendRequest(
                     'http://localhost:5001/api/users/signup',
                     'POST',
                     JSON.stringify({
@@ -74,7 +74,7 @@ const Login = () => {
                     }),
                     { 'Content-Type': 'application/json' }
                 );
-                loginContext.login();
+                authContext.login(response.user.id);
             } catch (error) {
                 console.log(error);
             }
@@ -83,7 +83,7 @@ const Login = () => {
 
     return (
         <>
-            {error && <ErrorModal error={error} onClear={clearError} />}
+            <ErrorModal error={error} onClear={clearError} />
             <Card className="w-9/10 max-w-[25rem] my-28 py-8 px-6 mx-auto text-center bg-white">
                 {isLoading && <LoadingSpinner asOverlay={true} />}
                 <h2 className="mb-4">Login Required</h2>

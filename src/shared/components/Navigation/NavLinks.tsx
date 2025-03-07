@@ -1,10 +1,10 @@
-import { useLoginContext } from '@/shared/context/login-context';
+import { useAuthContext } from '@/shared/context/auth-context';
 import { NavLink } from 'react-router-dom';
 
 import './NavLinks.css';
 
 const NavLinks = () => {
-    const { isLoggedIn, logout } = useLoginContext();
+    const { isLoggedIn, logout } = useAuthContext();
 
     return (
         <ul className="nav-links">

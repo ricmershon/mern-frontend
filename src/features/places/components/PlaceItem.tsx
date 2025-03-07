@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useLoginContext } from "@/shared/context/login-context";
+import { useAuthContext } from "@/shared/context/auth-context";
 import { PlaceType } from "@/types";
 import Modal from "@/shared/components/UIElements/Modal/Modal";
 import Card from "@/shared/components/UIElements/Card";
@@ -11,7 +11,7 @@ const PlacesItem = ({ place }: { place: PlaceType }) => {
     const [showMap, setShowMap] = useState(false);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
-    const { isLoggedIn } = useLoginContext();
+    const { isLoggedIn } = useAuthContext();
 
     const openMapHandler = () => setShowMap(true);
     const closeMapHandler = () => setShowMap(false);
