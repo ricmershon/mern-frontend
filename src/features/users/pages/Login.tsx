@@ -43,12 +43,12 @@ const Login = () => {
         setIsLoginMode((prevState) => !prevState)
     }
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         if (isLoginMode) {
             try {
-                sendRequest(
+                await sendRequest(
                     'http://localhost:5001/api/users/login',
                     'POST',
                     JSON.stringify({
@@ -63,7 +63,7 @@ const Login = () => {
             }
         } else {
             try {
-                sendRequest(
+                await sendRequest(
                     'http://localhost:5001/api/users/signup',
                     'POST',
                     JSON.stringify({
@@ -76,7 +76,7 @@ const Login = () => {
                 );
                 loginContext.login();
             } catch (error) {
-                console.error(error);
+                console.log(error);
             }
         }
     };

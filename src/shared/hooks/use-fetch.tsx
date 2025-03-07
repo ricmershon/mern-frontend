@@ -7,9 +7,9 @@ type UseFetchReturnType = [
     Error: ErrorMessage,
     sendRequest: (
         url: string,
-        method: string,
-        body: BodyInit | null,
-        headers: HeadersInit
+        method?: string,
+        body?: BodyInit | null,
+        headers?: HeadersInit
     ) => void,
     clearError: () => void
 ];

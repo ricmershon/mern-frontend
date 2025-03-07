@@ -1,37 +1,30 @@
 import { useState, useEffect } from "react";
 
-import { UserType, ErrorMessage } from "@/types";
+import { UserType } from "@/types";
+import useFetch from "@/shared/hooks/use-fetch";
 import UsersList from "@/features/users/components/UsersList";
 import ErrorModal from "@/shared/components/UIElements/Modal/ErrorModal";
 import LoadingSpinner from "@/shared/components/UIElements/LoadingSpinner";
 
 const Users = () => {
     const [users, setUsers] = useState<Array<UserType>>([{}]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<ErrorMessage>(null);
+    const [isLoading, error, sendRequest, clearError] = useFetch();
 
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                setIsLoading(true);
-                const response = await fetch('http://localhost:5001/api/users');
-                const data = await response.json();
-                if (!response.ok) {
-                    throw new Error(data.message);
-                }
-                setUsers(data.users);              
+                const data = await sendRequest('http://localhost:5001/api/users');
+                setUsers(data.users);
             } catch (error) {
-                setError(error.message || 'Something went wrong with getting users');
-            } finally {
-                setIsLoading(false);
-            }
+                console.log(error.message || 'Something went wrong with getting users');
+            } 
         };
         fetchUsers();
-    }, [])
+    }, [sendRequest])
 
     return (
         <>
-            {error && <ErrorModal error={error} onClear={() => setError(null)} />}
+            {error && <ErrorModal error={error} onClear={clearError} />}
             {isLoading ? (
                 <div className="center-content">
                     <LoadingSpinner asOverlay={true} />
