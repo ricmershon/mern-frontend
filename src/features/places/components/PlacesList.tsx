@@ -1,10 +1,14 @@
 import { PlaceType } from "@/types";
 
 import Card from "@/shared/components/UIElements/Card";
-import PlacesItem from "./PlaceItem";
+import PlaceItem from "./PlaceItem";
 import Button from "@/shared/components/FormElements/Button";
 
-const PlacesList = ({ places }: { places: Array<PlaceType>}) => (
+interface PlacesListProps {
+    places: Array<PlaceType>;
+    onDeletePlace: (placeId: string) => void;
+}
+const PlacesList = ({ places, onDeletePlace }: PlacesListProps) => (
     <>
         {places.length === 0 ? (
             <div className="center-content list-none mx-auto my-auto p-0 w-[90%] max-w-[40rem]">
@@ -16,7 +20,11 @@ const PlacesList = ({ places }: { places: Array<PlaceType>}) => (
         ) : (
             <ul className="list-none my-4 mx-auto p-0 w-[90%] max-w-[40rem]">
                 {places.map((place) => (
-                    <PlacesItem key={place.id} place={place} />
+                    <PlaceItem
+                        key={place.id}
+                        place={place}
+                        onDeletePlace={(placeId: string) => onDeletePlace(placeId)}
+                    />
                 )
                 
             )}

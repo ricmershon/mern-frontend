@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 
 import { RouterParams, PlaceType } from "@/types";
@@ -22,7 +22,11 @@ const UserPlaces = () => {
             }
         };
         fetchPlaces()
-    }, [params.userId, sendRequest])
+    }, [params.userId, sendRequest]);
+
+    const handlePlaceDelete = useCallback((placeId: string) => {
+        setPlaces((prevPlace) => prevPlace.filter((place) => place.id !== placeId));
+    }, []);
     
     return (
         <>
@@ -30,7 +34,7 @@ const UserPlaces = () => {
             {isLoading ? (
                 <LoadingSpinner asOverlay={true} />
             ) : (
-                <PlacesList places={places} />
+                <PlacesList places={places} onDeletePlace={(placeId: string) => handlePlaceDelete(placeId)}/>
             )}
         </>
     );

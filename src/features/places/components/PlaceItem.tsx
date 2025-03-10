@@ -1,15 +1,24 @@
 import { useState } from "react";
 
+import useFetch from "@/shared/hooks/use-fetch";
 import { useAuthContext } from "@/shared/context/auth-context";
 import { PlaceType } from "@/types";
 import Modal from "@/shared/components/UIElements/Modal/Modal";
 import Card from "@/shared/components/UIElements/Card";
 import Button from "@/shared/components/FormElements/Button";
 import Map from "@/shared/components/UIElements/Map";
+import ErrorModal from "@/shared/components/UIElements/Modal/ErrorModal";
+import LoadingSpinner from "@/shared/components/UIElements/LoadingSpinner";
 
-const PlacesItem = ({ place }: { place: PlaceType }) => {
+interface PlaceItemProps {
+    place: PlaceType;
+    onDeletePlace: (placeId: string) => void;
+}
+const PlaceItem = ({ place, onDeletePlace }: PlaceItemProps) => {
     const [showMap, setShowMap] = useState(false);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+
+    const [isLoading, error, sendRequest, clearError] = useFetch();
 
     const { isLoggedIn } = useAuthContext();
 
@@ -19,13 +28,24 @@ const PlacesItem = ({ place }: { place: PlaceType }) => {
     const openDeleteConfirmationHandler = () => setShowDeleteConfirmation(true);
     const closeDeleteConfirmationHandler = () => setShowDeleteConfirmation(false);
 
-    const confirmDeleteHandler = () => {
+
+
+    const confirmDeleteHandler = async () => {
         setShowDeleteConfirmation(false);
-        console.log('^^^ DELETING ^^^');
+        try {
+            await sendRequest(
+                `http://localhost:5001/api/places/${place.id}`,
+                'DELETE'
+            );
+        } catch (error) {
+            console.log(error.message || 'Something went wrong with getting users');
+        }
+        onDeletePlace(place.id);
     }
 
     return (
         <>
+            <ErrorModal error={error} onClear={clearError} />
             <Modal
                 show={showMap}
                 onCancel={closeMapHandler}
@@ -52,10 +72,11 @@ const PlacesItem = ({ place }: { place: PlaceType }) => {
                     </>
                 }
             >
-                <p className="">Are you sure you want to proceed? Deleting a place cannot be undone.</p>
+                <p className="">{`Are you sure you want to delete ${place.title}? This cannot be undone.`}</p>
             </Modal>
             <li className="mx-4 mb-4 my-0">
                 <Card className="p-0 bg-white">
+                    {isLoading && <LoadingSpinner asOverlay={true} />}
                     <div className="w-full h-[12.5rem] mr-[1.5rem] md:h-80">
                         <img className="w-full h-full object-cover" src={place.imageUrl} alt={place.title} />
                     </div>
@@ -78,4 +99,4 @@ const PlacesItem = ({ place }: { place: PlaceType }) => {
         </>
     );
 }
-export default PlacesItem;
+export default PlaceItem;
