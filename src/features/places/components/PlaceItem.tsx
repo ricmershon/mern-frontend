@@ -20,15 +20,13 @@ const PlaceItem = ({ place, onDeletePlace }: PlaceItemProps) => {
 
     const [isLoading, error, sendRequest, clearError] = useFetch();
 
-    const { isLoggedIn } = useAuthContext();
+    const { userId } = useAuthContext();
 
     const openMapHandler = () => setShowMap(true);
     const closeMapHandler = () => setShowMap(false);
 
     const openDeleteConfirmationHandler = () => setShowDeleteConfirmation(true);
     const closeDeleteConfirmationHandler = () => setShowDeleteConfirmation(false);
-
-
 
     const confirmDeleteHandler = async () => {
         setShowDeleteConfirmation(false);
@@ -87,7 +85,7 @@ const PlaceItem = ({ place, onDeletePlace }: PlaceItemProps) => {
                     </div>
                     <div className="p-4 text-center border-t border-[#ccc]">
                         <Button inverse onClick={openMapHandler}>VIEW ON MAP</Button>
-                        {isLoggedIn && (
+                        {userId === place.creator && (
                             <>
                                 <Button to={`/places/${place.id}`}>EDIT</Button>
                                 <Button danger onClick={openDeleteConfirmationHandler}>DELETE</Button>

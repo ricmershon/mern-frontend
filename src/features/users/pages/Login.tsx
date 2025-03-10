@@ -1,6 +1,6 @@
 import { useState, FormEvent } from "react";
 
-import { ValidatorMinLength, ValidatorEmail, ValidatorRequire } from "@/shared/utils/validators";
+import { ValidatorMinLength, ValidatorMaxLength, ValidatorEmail, ValidatorRequire } from "@/shared/utils/validators";
 import { useAuthContext } from "@/shared/context/auth-context";
 import useForm from "@/shared/hooks/use-form";
 import useFetch from "@/shared/hooks/use-fetch";
@@ -116,7 +116,7 @@ const Login = () => {
                         inputType="input"
                         type="password"
                         label="Password"
-                        validators={[ValidatorMinLength(6)]}
+                        validators={[ValidatorMinLength(6), ValidatorMaxLength(16)]}
                         onChange={handleInputChange}
                         errorText="Please enter a valid password with at least 6 characters."
                     />
