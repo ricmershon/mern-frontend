@@ -6,6 +6,7 @@ import useForm from "@/shared/hooks/use-form";
 import useFetch from "@/shared/hooks/use-fetch";
 import Card from "@/shared/components/UIElements/Card";
 import Input from "@/shared/components/FormElements/Input";
+import ImagePicker from "@/shared/components/FormElements/ImagePicker";
 import Button from "@/shared/components/FormElements/Button";
 import ErrorModal from "@/shared/components/UIElements/Modal/ErrorModal";
 import LoadingSpinner from "@/shared/components/UIElements/LoadingSpinner";
@@ -26,6 +27,9 @@ const Login = () => {
             if ('name' in formState) {
                 delete formState['name']
             };
+            if ('image' in formState) {
+                delete formState['image'];
+            }
             setFormData(
                 { ...formState.inputs },
                 formState.inputs.email.isValid && formState.inputs.password.isValid
@@ -34,7 +38,8 @@ const Login = () => {
             setFormData(
                 {
                     ...formState.inputs,
-                    name: { value: '', isValid: false }
+                    name: { value: '', isValid: false },
+                    image: { value: null, isValid: false}
                 },
                 false
             );
@@ -91,15 +96,18 @@ const Login = () => {
                     onSubmit={handleSubmit}
                 >
                     {!isLoginMode && (
-                        <Input
-                            id="name"
-                            inputType="input"
-                            type="text"
-                            label="Name"
-                            validators={[ValidatorRequire()]}
-                            onChange={handleInputChange}
-                            errorText="Please enter a name."
-                        />
+                        <>
+                            <Input
+                                id="name"
+                                inputType="input"
+                                type="text"
+                                label="Name"
+                                validators={[ValidatorRequire()]}
+                                onChange={handleInputChange}
+                                errorText="Please enter a name."
+                            />
+                            <ImagePicker id="image" onChange={handleInputChange} />
+                        </>
                     )}
                     <Input
                         id="email"
