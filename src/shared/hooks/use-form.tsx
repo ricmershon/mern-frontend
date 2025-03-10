@@ -9,10 +9,8 @@ type FormAction =
 type UseFormReturnType = [
     formState: FormState,
     handleInputChange: InputChangeHandler,
-    loadFormData: LoadFormHandler
+    setFormData: (inputData: FormInputs, formIsValid: boolean) => void
 ] 
-
-export type LoadFormHandler = (inputData: FormInputs, formIsValid: boolean) => void;
 
 const formReducer = (state: FormState, action: FormAction) => {
     switch (action.type) {
@@ -73,7 +71,7 @@ const useForm = (
         });
     }, []);
 
-    const loadFormData = useCallback((inputData: FormInputs, formValidity: boolean) => {
+    const setFormData = useCallback((inputData: FormInputs, formValidity: boolean) => {
         dispatch({
             type: 'LOAD_DATA',
             inputs: inputData,
@@ -81,7 +79,7 @@ const useForm = (
         })
     }, [])
     
-    return [formState, handleInputChange, loadFormData];
+    return [formState, handleInputChange, setFormData];
 }
 
 export default useForm;

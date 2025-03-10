@@ -15,7 +15,7 @@ const Login = () => {
     const [isLoginMode, setIsLoginMode] = useState(true);
 
     const [isLoading, error, sendRequest, clearError] = useFetch();
-    const [formState, handleInputChange, loadFormData] = useForm({
+    const [formState, handleInputChange, setFormData] = useForm({
         email: { value: '', isValid: false },
         password: { value: '', isValid: false }
     }, false);
@@ -26,12 +26,12 @@ const Login = () => {
             if ('name' in formState) {
                 delete formState['name']
             };
-            loadFormData(
+            setFormData(
                 { ...formState.inputs },
                 formState.inputs.email.isValid && formState.inputs.password.isValid
             );
         } else {
-            loadFormData(
+            setFormData(
                 {
                     ...formState.inputs,
                     name: { value: '', isValid: false }

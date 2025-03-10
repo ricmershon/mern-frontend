@@ -7,12 +7,10 @@ import PlacesList from "@/features/places/components/PlacesList";
 import ErrorModal from "@/shared/components/UIElements/Modal/ErrorModal";
 import LoadingSpinner from "@/shared/components/UIElements/LoadingSpinner";
 
-
-
 const UserPlaces = () => {
-    const [places, setPlaces] = useState<Array<PlaceType>>([{}]);
-    const [isLoading, error, sendRequest, clearError] = useFetch();
     const params: RouterParams = useParams();
+    const [places, setPlaces] = useState<Array<PlaceType>>([]);
+    const [isLoading, error, sendRequest, clearError] = useFetch();
 
     useEffect(() => {
         const fetchPlaces = async () => {
