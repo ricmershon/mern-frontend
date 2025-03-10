@@ -28,14 +28,13 @@ const UpdatePlace = () => {
         const fetchPlace = async () => {
             try {
                 const data = await sendRequest(`http://localhost:5001/api/places/${placeId}`);
-                console.log('^^^ DATA ^^^', data);
                 setPlace(data.place)
                 setFormData({
-                    title: { value: data.place.title, isValid: true },
-                    description: { value: data.place.description, isValid: true }
+                    title: { value: data.place!.title, isValid: true },
+                    description: { value: data.place!.description, isValid: true }
                 }, true);
             } catch (error) {
-                console.log(error.message || 'Something went wrong with getting users');
+                console.log(error);
             }
         }
         fetchPlace();
@@ -43,6 +42,7 @@ const UpdatePlace = () => {
     
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
         try {
             await sendRequest(
                 `http://localhost:5001/api/places/${placeId}`,

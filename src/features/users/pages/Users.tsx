@@ -14,9 +14,9 @@ const Users = () => {
         const fetchUsers = async () => {
             try {
                 const data = await sendRequest('http://localhost:5001/api/users');
-                setUsers(data.users);
+                setUsers(data.users!);
             } catch (error) {
-                console.log(error.message || 'Something went wrong with getting users');
+                console.log(error);
             } 
         };
         fetchUsers();

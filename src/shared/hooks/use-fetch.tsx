@@ -1,6 +1,13 @@
 import { useCallback, useRef, useState, useEffect } from "react";
 
-import { ErrorMessage } from "@/types";
+import { ErrorMessage, PlaceType, UserType } from "@/types";
+
+interface SendRequestReturnType {
+    place?: PlaceType;
+    places?: Array<PlaceType>;
+    user?: UserType;
+    users?: Array<UserType>;
+}
 
 type UseFetchReturnType = [
     isLoading: boolean,
@@ -10,7 +17,7 @@ type UseFetchReturnType = [
         method?: string,
         body?: BodyInit | null,
         headers?: HeadersInit
-    ) => void,
+    ) => Promise<SendRequestReturnType>,
     clearError: () => void
 ];
 
@@ -25,7 +32,7 @@ const useFetch = (): UseFetchReturnType => {
         method: string = 'GET',
         body: BodyInit | null = null,
         headers: HeadersInit = {}
-    ) => {
+    ): Promise<SendRequestReturnType> => {
         setIsLoading(true);
         const fetchAbortController = new AbortController();
         activeFetchRequest.current.push(fetchAbortController);
@@ -50,7 +57,9 @@ const useFetch = (): UseFetchReturnType => {
 
             return data;
         } catch (error) {
-            setError(error.message);
+            if (error instanceof Error) {
+                setError(error.message);
+            }
             throw error;
         } finally {
             setIsLoading(false);

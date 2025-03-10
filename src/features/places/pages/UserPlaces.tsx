@@ -16,9 +16,9 @@ const UserPlaces = () => {
         const fetchPlaces = async () => {
             try {
                 const data = await sendRequest(`http://localhost:5001/api/places/user/${params.userId}`)
-                setPlaces(data.places);
+                setPlaces(data.places!);
             } catch (error) {
-                console.log(error.message || 'Something went wrong with getting users');
+                console.log(error);
             }
         };
         fetchPlaces()
