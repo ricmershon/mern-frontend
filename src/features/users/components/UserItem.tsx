@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
 
-import { UserType } from "@/features/users/types";
+import { UserType } from "@/types";
 import Avatar from "@/shared/components/UIElements/Avatar";
 import Card from "@/shared/components/UIElements/Card";
 
-const UserItem = ({ id, imageUrl, name, placeCount }: UserType) => (
+interface UserItemProps extends UserType {
+    placeCount: number;
+}
+
+const UserItem = ({ id, imageUrl, name, placeCount }: UserItemProps) => (
     <li className="m-4 w-[calc(45%-2rem)] min-w-[17.5rem] group">
         <Card className="p-0">
             <Link

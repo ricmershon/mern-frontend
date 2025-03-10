@@ -1,45 +1,42 @@
+import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 
-import { RouterParams } from "@/types";
-import { PlaceType } from "@/features/places/types";
+import { RouterParams, PlaceType } from "@/types";
+import useFetch from "@/shared/hooks/use-fetch";
 import PlacesList from "@/features/places/components/PlacesList";
-
-const PLACES: Array<PlaceType> = [
-    {
-        id: 'p1',
-        title: 'Empire State Building',
-        description: 'One of the most famous sky scrapers in the world!',
-        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/NYC_Empire_State_Building.jpg/640px-NYC_Empire_State_Building.jpg',
-        address: '20 W 34th St, New York, NY 10001',
-        location: {
-            lat: 40.7484405,
-            lng: -73.9878584
-        },
-        creator: 'u1'
-    },
-    {
-        id: 'p2',
-        title: 'plop State Building',
-        description: 'One of the most famous sky scrapers in the world!',
-        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/NYC_Empire_State_Building.jpg/640px-NYC_Empire_State_Building.jpg',
-        address: '20 W 34th St, New York, NY 10001',
-        location: {
-            lat: 40.7484405,
-            lng: -73.9878584
-        },
-        creator: 'u2'
-    }
-];
+import ErrorModal from "@/shared/components/UIElements/Modal/ErrorModal";
+import LoadingSpinner from "@/shared/components/UIElements/LoadingSpinner";
 
 const UserPlaces = () => {
     const params: RouterParams = useParams();
-    
-    const placesToLoad = PLACES.filter((place) => (
-        place.creator === params.userId
-    ));
+    const [places, setPlaces] = useState<Array<PlaceType>>([]);
+    const [isLoading, error, sendRequest, clearError] = useFetch();
+
+    useEffect(() => {
+        const fetchPlaces = async () => {
+            try {
+                const data = await sendRequest(`http://localhost:5001/api/places/user/${params.userId}`)
+                setPlaces(data.places);
+            } catch (error) {
+                console.log(error.message || 'Something went wrong with getting users');
+            }
+        };
+        fetchPlaces()
+    }, [params.userId, sendRequest]);
+
+    const handlePlaceDelete = useCallback((placeId: string) => {
+        setPlaces((prevPlace) => prevPlace.filter((place) => place.id !== placeId));
+    }, []);
     
     return (
-        <PlacesList places={placesToLoad} />
+        <>
+            <ErrorModal error={error} onClear={clearError} />
+            {isLoading ? (
+                <LoadingSpinner asOverlay={true} />
+            ) : (
+                <PlacesList places={places} onDeletePlace={(placeId: string) => handlePlaceDelete(placeId)}/>
+            )}
+        </>
     );
 }
 

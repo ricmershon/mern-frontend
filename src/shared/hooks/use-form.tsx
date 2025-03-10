@@ -1,12 +1,16 @@
 import { useReducer, useCallback } from "react";
-import { FormState, FormInputs } from "@/shared/types";
+import { FormState, FormInputs } from "@/types";
 import { InputChangeHandler } from "@/shared/components/FormElements/Input";
 
 type FormAction =
-    { type: 'INPUT_CHANGE', inputId: string, value: string, isValid: boolean }
+    | { type: 'INPUT_CHANGE', inputId: string, value: string, isValid: boolean }
     | { type: 'LOAD_DATA', inputs: FormInputs, formIsValid: boolean };
 
-export type LoadFormHandler = (inputData: FormInputs, formIsValid: boolean) => void;
+type UseFormReturnType = [
+    formState: FormState,
+    handleInputChange: InputChangeHandler,
+    setFormData: (inputData: FormInputs, formIsValid: boolean) => void
+] 
 
 const formReducer = (state: FormState, action: FormAction) => {
     switch (action.type) {
@@ -46,18 +50,19 @@ const formReducer = (state: FormState, action: FormAction) => {
 }
 
 const useForm = (
-    initialInputs: FormInputs, initialValidity: boolean
-): [
-    formState: FormState,
-    handleInputChange: InputChangeHandler,
-    loadFormData: LoadFormHandler
-] => {
+    initialInputs: FormInputs,
+    initialValidity: boolean
+): UseFormReturnType => {
     const [formState, dispatch] = useReducer(formReducer, {
         inputs: initialInputs,
         isValid: initialValidity
     });
 
-    const handleInputChange = useCallback((id: string, value: string, isValid: boolean) => {
+    const handleInputChange = useCallback((
+        id: string,
+        value: string,
+        isValid: boolean
+    ) => {
         dispatch({
             type: 'INPUT_CHANGE',
             value: value,
@@ -66,7 +71,7 @@ const useForm = (
         });
     }, []);
 
-    const loadFormData = useCallback((inputData: FormInputs, formValidity: boolean) => {
+    const setFormData = useCallback((inputData: FormInputs, formValidity: boolean) => {
         dispatch({
             type: 'LOAD_DATA',
             inputs: inputData,
@@ -74,7 +79,7 @@ const useForm = (
         })
     }, [])
     
-    return [formState, handleInputChange, loadFormData];
+    return [formState, handleInputChange, setFormData];
 }
 
 export default useForm;

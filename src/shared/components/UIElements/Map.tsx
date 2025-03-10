@@ -1,6 +1,6 @@
 import { useRef, useEffect, CSSProperties } from "react";
 
-import { Location } from "@/features/places/types";
+import { Location } from "@/types";
 
 interface MapProps {
     center: Location;

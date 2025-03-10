@@ -7,17 +7,20 @@ import NewPlace from '@/features/places/pages/NewPlace';
 import UserPlaces from '@/features/places/pages/UserPlaces';
 import UpdatePlace from '@/features/places/pages/UpdatePlace';
 import Login from '@/features/users/pages/Login';
-import { LoginContext } from '@/shared/context/login-context';
+import { AuthContext } from '@/shared/context/auth-context';
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userId, setUserId] = useState<string | null>(null);
 
-    const login = useCallback(() => {
+    const login = useCallback((userId: string) => {
         setIsLoggedIn(true);
+        setUserId(userId);
     }, []);
 
     const logout = useCallback(() => {
         setIsLoggedIn(false);
+        setUserId(null);
     }, []);
 
     let routes;
@@ -58,11 +61,12 @@ const App = () => {
     }
 
     return (
-        <LoginContext.Provider
+        <AuthContext.Provider
             value={{
                 isLoggedIn: isLoggedIn,
                 login: login,
-                logout: logout
+                logout: logout,
+                userId: userId
             }}
         >
             <Router>
@@ -71,7 +75,7 @@ const App = () => {
                     {routes}
                 </main>
             </Router>
-        </LoginContext.Provider>
+        </AuthContext.Provider>
     );
 }
 
