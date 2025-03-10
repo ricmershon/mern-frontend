@@ -47,7 +47,7 @@ const Login = () => {
 
         if (isLoginMode) {
             try {
-                const response = await sendRequest(
+                const data = await sendRequest(
                     'http://localhost:5001/api/users/login',
                     'POST',
                     JSON.stringify({
@@ -56,14 +56,13 @@ const Login = () => {
                     }),
                     { 'Content-Type': 'application/json' }
                 );
-                console.log('### RESPONSE ###', response);
-                authContext.login(response.user.id);
+                authContext.login(data.user!.id!);
             } catch (error) {
                 console.log(error);
             }
         } else {
             try {
-                const response = await sendRequest(
+                const data = await sendRequest(
                     'http://localhost:5001/api/users/signup',
                     'POST',
                     JSON.stringify({
@@ -74,7 +73,7 @@ const Login = () => {
                     }),
                     { 'Content-Type': 'application/json' }
                 );
-                authContext.login(response.user.id);
+                authContext.login(data.user!.id!);
             } catch (error) {
                 console.log(error);
             }

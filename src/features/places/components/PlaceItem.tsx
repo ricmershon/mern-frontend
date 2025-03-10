@@ -36,7 +36,7 @@ const PlaceItem = ({ place, onDeletePlace }: PlaceItemProps) => {
                 'DELETE'
             );
         } catch (error) {
-            console.log(error.message || 'Something went wrong with getting users');
+            console.log(error);
         }
         onDeletePlace(place.id);
     }

@@ -3,7 +3,7 @@ export interface RouterParams {
     placeId: string
 }
 
-export type ErrorMessage = {message: string} | null;
+export type ErrorMessage = string | null;
 
 export interface RequestBody {
     name: string;
