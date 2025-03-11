@@ -67,16 +67,15 @@ const Login = () => {
             }
         } else {
             try {
+                const formData = new FormData();
+                formData.append('name', formState.inputs.name.value);
+                formData.append('email', formState.inputs.email.value);
+                formData.append('password', formState.inputs.password.value);
+                formData.append('image', formState.inputs.image.value);
                 const data = await sendRequest(
                     'http://localhost:5001/api/users/signup',
                     'POST',
-                    JSON.stringify({
-                        name: formState.inputs.name.value,
-                        email: formState.inputs.email.value,
-                        password: formState.inputs.password.value,
-                        image: 'someurl'
-                    }),
-                    { 'Content-Type': 'application/json' }
+                    formData
                 );
                 authContext.login(data.user!.id!);
             } catch (error) {

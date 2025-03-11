@@ -16,7 +16,7 @@ const UserItem = ({ id, image, name, placeCount }: UserItemProps) => (
                 className="flex items-center w-full h-full no-underline p-4 text-white hover:text-[#292929] bg-[#292929] hover:bg-[#ffd900]"
             >
                 <div className="w-16 h-16 mr-4">
-                    <Avatar image={image} alt={name} />
+                    <Avatar image={image!} alt={name!} />
                 </div>
                 <div className="m-0">
                     <h2 className="mr-2">{name}</h2>

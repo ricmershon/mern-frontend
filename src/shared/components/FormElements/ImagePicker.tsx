@@ -18,7 +18,6 @@ const ImagePicker = ({ id, center, onChange, errorText }: ImagePickerProps) => {
         if (!file) {
             return;
         }
-
         const fileReader = new FileReader();
         fileReader.onload = () => {
             setPreviewUrl(fileReader.result);
