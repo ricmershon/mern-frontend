@@ -16,7 +16,7 @@ const UsersList = ({ users }: { users: Array<UserType> }) => (
                     <UserItem
                         key={user.id}
                         id={user.id}
-                        imageUrl={user.imageUrl}
+                        image={user.image}
                         name={user.name}
                         placeCount={user.places ? user.places.length : 0}
                     />

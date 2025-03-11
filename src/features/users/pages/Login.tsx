@@ -74,7 +74,7 @@ const Login = () => {
                         name: formState.inputs.name.value,
                         email: formState.inputs.email.value,
                         password: formState.inputs.password.value,
-                        imageUrl: 'someurl'
+                        image: 'someurl'
                     }),
                     { 'Content-Type': 'application/json' }
                 );

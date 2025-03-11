@@ -9,7 +9,7 @@ export interface RequestBody {
     name: string;
     email: string;
     password: string;
-    imageUrl: string;
+    image: string;
     places: Array<PlaceType>;
 }
 
@@ -20,7 +20,7 @@ export interface Location {
 
 export interface PlaceType {
     id: string;
-    imageUrl: string;
+    image: string;
     title: string;
     description: string;
     address: string;
@@ -31,7 +31,7 @@ export interface PlaceType {
 export interface UserType {
     id?: string;
     name?: string;
-    imageUrl?: string;
+    image?: string;
     places?: Array<PlaceType>;
 }
 

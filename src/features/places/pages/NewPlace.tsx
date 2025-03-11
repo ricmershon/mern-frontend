@@ -30,7 +30,7 @@ const NewPlace = () => {
                     description: formState.inputs.description.value,
                     address: formState.inputs.address.value,
                     creator: authContext.userId,
-                    imageUrl: 'someurl'
+                    image: 'someurl'
                 }),
                 { 'Content-Type': 'application/json' }
             );
