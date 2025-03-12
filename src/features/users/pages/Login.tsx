@@ -1,6 +1,7 @@
 import { useState, FormEvent } from "react";
 
 import { ValidatorMinLength, ValidatorMaxLength, ValidatorEmail, ValidatorRequire } from "@/shared/utils/validators";
+import { useApiContext } from "@/shared/context/apis-context";
 import { useAuthContext } from "@/shared/context/auth-context";
 import useForm from "@/shared/hooks/use-form";
 import useFetch from "@/shared/hooks/use-fetch";
@@ -12,6 +13,7 @@ import ErrorModal from "@/shared/components/UIElements/Modal/ErrorModal";
 import LoadingSpinner from "@/shared/components/UIElements/LoadingSpinner";
 
 const Login = () => {
+    const { usersApiUrl } = useApiContext();
     const authContext = useAuthContext();
     const [isLoginMode, setIsLoginMode] = useState(true);
 
@@ -53,7 +55,7 @@ const Login = () => {
         if (isLoginMode) {
             try {
                 const data = await sendRequest(
-                    'http://localhost:5001/api/users/login',
+                    `${usersApiUrl}/login`,
                     'POST',
                     JSON.stringify({
                         email: formState.inputs.email.value,
@@ -73,7 +75,7 @@ const Login = () => {
                 formData.append('password', formState.inputs.password.value);
                 formData.append('image', formState.inputs.image.value);
                 const data = await sendRequest(
-                    'http://localhost:5001/api/users/signup',
+                    `${usersApiUrl}/signup`,
                     'POST',
                     formData
                 );

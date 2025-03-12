@@ -4,6 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { RouterParams, PlaceType } from "@/types";
 import { ValidatorRequire, ValidatorMinLength } from "@/shared/utils/validators";
 import { useAuthContext } from "@/shared/context/auth-context";
+import { useApiContext } from "@/shared/context/apis-context";
 import useFetch from "@/shared/hooks/use-fetch";
 import useForm from "@/shared/hooks/use-form";
 import Input from "@/shared/components/FormElements/Input";
@@ -17,6 +18,7 @@ const UpdatePlace = () => {
     const history = useHistory();
 
     const authContext = useAuthContext();
+    const { placesApiUrl } = useApiContext();
     const [place, setPlace] = useState<PlaceType>();
     const [isLoading, error, sendRequest, clearError] = useFetch();
     const [formState, handleInputChange, setFormData] = useForm({
@@ -27,7 +29,7 @@ const UpdatePlace = () => {
     useEffect(() => {
         const fetchPlace = async () => {
             try {
-                const data = await sendRequest(`http://localhost:5001/api/places/${placeId}`);
+                const data = await sendRequest(`${placesApiUrl}/${placeId}`);
                 setPlace(data.place)
                 setFormData({
                     title: { value: data.place!.title, isValid: true },
@@ -38,14 +40,14 @@ const UpdatePlace = () => {
             }
         }
         fetchPlace();
-    }, [placeId, sendRequest, setFormData]);
+    }, [placeId, placesApiUrl, sendRequest, setFormData]);
     
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         try {
             await sendRequest(
-                `http://localhost:5001/api/places/${placeId}`,
+                `${placesApiUrl}/${placeId}`,
                 'PATCH',
                 JSON.stringify({
                     title: formState.inputs.title.value,

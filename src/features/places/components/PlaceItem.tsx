@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import useFetch from "@/shared/hooks/use-fetch";
 import { useAuthContext } from "@/shared/context/auth-context";
+import { useApiContext } from "@/shared/context/apis-context";
 import { PlaceType } from "@/types";
 import Modal from "@/shared/components/UIElements/Modal/Modal";
 import Card from "@/shared/components/UIElements/Card";
@@ -21,6 +22,7 @@ const PlaceItem = ({ place, onDeletePlace }: PlaceItemProps) => {
     const [isLoading, error, sendRequest, clearError] = useFetch();
 
     const { userId } = useAuthContext();
+    const { placesApiUrl } = useApiContext();
 
     const openMapHandler = () => setShowMap(true);
     const closeMapHandler = () => setShowMap(false);
@@ -32,7 +34,7 @@ const PlaceItem = ({ place, onDeletePlace }: PlaceItemProps) => {
         setShowDeleteConfirmation(false);
         try {
             await sendRequest(
-                `http://localhost:5001/api/places/${place.id}`,
+                `${placesApiUrl}/${place.id}`,
                 'DELETE'
             );
         } catch (error) {

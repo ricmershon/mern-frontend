@@ -6,6 +6,7 @@ interface AuthContextProps {
     login: (userId: string) => void;
     logout: () => void;
 }
+
 export const AuthContext = createContext<AuthContextProps>({
     isLoggedIn: false,
     userId: null,
