@@ -48,8 +48,8 @@ const NewPlace = () => {
             <ErrorModal error={error} onClear={clearError} />
             <form onSubmit={handleSubmit} className="place-form">
                 {isLoading && <LoadingSpinner asOverlay={true} />}
-                <div className="flex justify-between">
-                    <div className="flex flex-col w-[60%] mx-5">
+                <div className="flex justify-between items-center mx-4">
+                    <div className="flex flex-col"  style={{ flex: "0 0 60%" }}>
                         <Input
                             id="title"
                             inputType="input"

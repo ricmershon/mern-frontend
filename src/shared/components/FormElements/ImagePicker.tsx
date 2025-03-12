@@ -4,11 +4,12 @@ import Button from "./Button";
 interface ImagePickerProps {
     id: string;
     center?: boolean;
+    isUserImage: boolean;
     onChange: (id: string, pickedFile: File, fileIsValid: boolean) => void;
     errorText?: string;
 }
 
-const ImagePicker = ({ id, center, onChange, errorText }: ImagePickerProps) => {
+const ImagePicker = ({ id, center, isUserImage = false, onChange, errorText }: ImagePickerProps) => {
     const filePickerRef = useRef<HTMLInputElement>(null);
     const [file, setFile] = useState<File>();
     const [previewUrl, setPreviewUrl] = useState<ArrayBuffer | null | string>(null);
@@ -49,7 +50,7 @@ const ImagePicker = ({ id, center, onChange, errorText }: ImagePickerProps) => {
     }
     
     return (
-        <div className="my-4 mx-0">
+        <div className={`${isUserImage ? 'my-4 mx-0' : 'my-4'}`} style={{flex: `${!isUserImage && '0'}`}}>
             <input
                 id={id}
                 type="file"
