@@ -9,7 +9,7 @@ import ErrorModal from "@/shared/components/UIElements/Modal/ErrorModal";
 import LoadingSpinner from "@/shared/components/UIElements/LoadingSpinner";
 
 const UserPlaces = () => {
-    const params: RouterParams = useParams();
+    const { userId }: RouterParams = useParams();
 
     const { placesApiUrl } = useApiContext();
     const [places, setPlaces] = useState<Array<PlaceType>>([]);
@@ -18,14 +18,14 @@ const UserPlaces = () => {
     useEffect(() => {
         const fetchPlaces = async () => {
             try {
-                const data = await sendRequest(`${placesApiUrl}/user/${params.userId}`)
+                const data = await sendRequest(`${placesApiUrl}/user/${userId}`)
                 setPlaces(data.places!);
             } catch (error) {
                 console.log(error);
             }
         };
         fetchPlaces()
-    }, [params.userId, sendRequest]);
+    }, [userId, placesApiUrl, sendRequest]);
 
     const handlePlaceDelete = useCallback((placeId: string) => {
         setPlaces((prevPlace) => prevPlace.filter((place) => place.id !== placeId));

@@ -23,7 +23,6 @@ const Login = () => {
         password: { value: '', isValid: false }
     }, false);
 
-
     const handleModeSwitch = () => {
         if (!isLoginMode) {
             if ('name' in formState) {
@@ -51,7 +50,6 @@ const Login = () => {
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
         if (isLoginMode) {
             try {
                 const data = await sendRequest(
@@ -74,6 +72,7 @@ const Login = () => {
                 formData.append('email', formState.inputs.email.value);
                 formData.append('password', formState.inputs.password.value);
                 formData.append('image', formState.inputs.image.value);
+
                 const data = await sendRequest(
                     `${usersApiUrl}/signup`,
                     'POST',
@@ -107,7 +106,7 @@ const Login = () => {
                                 onChange={handleInputChange}
                                 errorText="Please enter a name."
                             />
-                            <ImagePicker id="image" onChange={handleInputChange} />
+                            <ImagePicker id="image" onChange={handleInputChange} errorText="Please select an image."/>
                         </>
                     )}
                     <Input

@@ -69,7 +69,7 @@ const ImagePicker = ({ id, center, isUserImage = false, onChange, errorText }: I
                 </div>
                 <Button type="button" onClick={handlePickImage}>SELECT A PROFILE IMAGE</Button>
             </div>
-            {isValid && errorText && <p>{errorText}</p>}
+            {!isValid && errorText && <p>{errorText}</p>}
         </div>
     );
 }

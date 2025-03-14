@@ -22,7 +22,7 @@ const PlaceItem = ({ place, onDeletePlace }: PlaceItemProps) => {
     const [isLoading, error, sendRequest, clearError] = useFetch();
 
     const { userId } = useAuthContext();
-    const { placesApiUrl } = useApiContext();
+    const { placesApiUrl, baseApiUrl } = useApiContext();
 
     const openMapHandler = () => setShowMap(true);
     const closeMapHandler = () => setShowMap(false);
@@ -78,7 +78,7 @@ const PlaceItem = ({ place, onDeletePlace }: PlaceItemProps) => {
                 <Card className="p-0 bg-white">
                     {isLoading && <LoadingSpinner asOverlay={true} />}
                     <div className="w-full h-[12.5rem] mr-[1.5rem] md:h-80">
-                        <img className="w-full h-full object-cover" src={place.image} alt={place.title} />
+                        <img className="w-full h-full object-cover" src={`${baseApiUrl}/${place.image}`} alt={place.title} />
                     </div>
                     <div className="p-4 text-center">
                         <h2 className="m-0 mb-2">{place.title}</h2>

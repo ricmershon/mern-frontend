@@ -19,24 +19,22 @@ const NewPlace = () => {
     const [isLoading, error, sendRequest, clearError] = useFetch();
     const [formState, handleInputChange] = useForm({
         title: { value: '', isValid: false },
-        description: { value: '', isValid: false }
+        description: { value: '', isValid: false },
+        address: { value: '', isValid: false },
+        image: { value: '', isValid: false }
     }, false);
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
-            await sendRequest(
-                placesApiUrl,
-                'POST',
-                JSON.stringify({
-                    title: formState.inputs.title.value,
-                    description: formState.inputs.description.value,
-                    address: formState.inputs.address.value,
-                    creator: authContext.userId,
-                    image: 'someurl'
-                }),
-                { 'Content-Type': 'application/json' }
-            );
+            const formData = new FormData();
+            formData.append('title', formState.inputs.title.value);
+            formData.append('description', formState.inputs.description.value);
+            formData.append('address', formState.inputs.address.value);
+            formData.append('creator', authContext.userId!);
+            formData.append('image', formState.inputs.image.value);
+            
+            await sendRequest(placesApiUrl, 'POST', formData);
             history.push('/')
         } catch (error) {
             console.log(error);
@@ -49,7 +47,7 @@ const NewPlace = () => {
             <form onSubmit={handleSubmit} className="place-form">
                 {isLoading && <LoadingSpinner asOverlay={true} />}
                 <div className="flex justify-between items-center mx-4">
-                    <div className="flex flex-col"  style={{ flex: "0 0 60%" }}>
+                    <div className="flex flex-col" style={{ flex: "0 0 60%" }}>
                         <Input
                             id="title"
                             inputType="input"
@@ -77,7 +75,11 @@ const NewPlace = () => {
                         />
                         <Button type="submit" disabled={!formState.isValid}>ADD PLACE</Button>
                     </div>
-                    <ImagePicker />
+                    <ImagePicker
+                        id="image"
+                        onChange={handleInputChange}
+                        errorText="Please select an image."
+                    />
                 </div>
             </form>
         </>
