@@ -34,7 +34,9 @@ const NewPlace = () => {
             formData.append('creator', authContext.userId!);
             formData.append('image', formState.inputs.image.value);
             
-            await sendRequest(placesApiUrl, 'POST', formData);
+            await sendRequest(placesApiUrl, 'POST', formData, {
+                Authorization: 'Bearer ' + authContext.token
+            });
             history.push('/')
         } catch (error) {
             console.log(error);

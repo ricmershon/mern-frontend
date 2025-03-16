@@ -61,7 +61,7 @@ const Login = () => {
                     }),
                     { 'Content-Type': 'application/json' }
                 );
-                authContext.login(data.user!.id!);
+                authContext.login(data.userId!, data.token!);
             } catch (error) {
                 console.log(error);
             }
@@ -78,7 +78,7 @@ const Login = () => {
                     'POST',
                     formData
                 );
-                authContext.login(data.user!.id!);
+                authContext.login(data.userId!);
             } catch (error) {
                 console.log(error);
             }

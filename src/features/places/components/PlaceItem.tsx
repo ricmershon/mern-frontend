@@ -21,7 +21,7 @@ const PlaceItem = ({ place, onDeletePlace }: PlaceItemProps) => {
 
     const [isLoading, error, sendRequest, clearError] = useFetch();
 
-    const { userId } = useAuthContext();
+    const authContext = useAuthContext();
     const { placesApiUrl, baseApiUrl } = useApiContext();
 
     const openMapHandler = () => setShowMap(true);
@@ -35,7 +35,11 @@ const PlaceItem = ({ place, onDeletePlace }: PlaceItemProps) => {
         try {
             await sendRequest(
                 `${placesApiUrl}/${place.id}`,
-                'DELETE'
+                'DELETE',
+                null,
+                {
+                    Authorization: 'Bearer ' + authContext.token
+                }
             );
         } catch (error) {
             console.log(error);
@@ -87,7 +91,7 @@ const PlaceItem = ({ place, onDeletePlace }: PlaceItemProps) => {
                     </div>
                     <div className="p-4 text-center border-t border-[#ccc]">
                         <Button inverse onClick={openMapHandler}>VIEW ON MAP</Button>
-                        {userId === place.creator && (
+                        {authContext.userId === place.creator && (
                             <>
                                 <Button to={`/places/${place.id}`}>EDIT</Button>
                                 <Button danger onClick={openDeleteConfirmationHandler}>DELETE</Button>

@@ -29,6 +29,7 @@ export interface PlaceType {
 }
 
 export interface UserType {
+    userId?: string;
     id?: string;
     name?: string;
     image?: string;

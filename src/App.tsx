@@ -11,22 +11,22 @@ import UpdatePlace from '@/features/places/pages/UpdatePlace';
 import Login from '@/features/users/pages/Login';
 
 const App = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [token, setToken] = useState<string | null>(null);
     const [userId, setUserId] = useState<string | null>(null);
 
-    const login = useCallback((userId: string) => {
-        setIsLoggedIn(true);
+    const login = useCallback((userId: string, token: string) => {
+        setToken(token);
         setUserId(userId);
     }, []);
 
     const logout = useCallback(() => {
-        setIsLoggedIn(false);
+        setToken(null);
         setUserId(null);
     }, []);
 
     let routes;
 
-    if (isLoggedIn) {
+    if (token) {
         routes = (
             <Switch>
                 <Route path='/' exact={true}>
@@ -69,7 +69,8 @@ const App = () => {
         }}>
             <AuthContext.Provider
                 value={{
-                    isLoggedIn: isLoggedIn,
+                    isLoggedIn: !!token,
+                    token: token,
                     login: login,
                     logout: logout,
                     userId: userId
