@@ -78,7 +78,7 @@ const Login = () => {
                     'POST',
                     formData
                 );
-                authContext.login(data.userId!);
+                authContext.login(data.userId!, data.token!);
             } catch (error) {
                 console.log(error);
             }

@@ -37,9 +37,7 @@ const PlaceItem = ({ place, onDeletePlace }: PlaceItemProps) => {
                 `${placesApiUrl}/${place.id}`,
                 'DELETE',
                 null,
-                {
-                    Authorization: 'Bearer ' + authContext.token
-                }
+                { Authorization: 'Bearer ' + authContext.token }
             );
         } catch (error) {
             console.log(error);
