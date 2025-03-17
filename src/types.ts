@@ -47,3 +47,5 @@ export interface FormState {
     inputs: FormInputs;
     isValid: boolean;
 }
+
+export const LoginDuration = 1000 * 60 * 60;    // 1 hour
