@@ -1,16 +1,22 @@
 import { useState, FormEvent } from "react";
 
 import { ValidatorMinLength, ValidatorMaxLength, ValidatorEmail, ValidatorRequire } from "@/shared/utils/validators";
+
+import { useApiContext } from "@/shared/context/apis-context";
 import { useAuthContext } from "@/shared/context/auth-context";
+
 import useForm from "@/shared/hooks/use-form";
 import useFetch from "@/shared/hooks/use-fetch";
+
 import Card from "@/shared/components/UIElements/Card";
 import Input from "@/shared/components/FormElements/Input";
+import ImagePicker from "@/shared/components/FormElements/ImagePicker";
 import Button from "@/shared/components/FormElements/Button";
 import ErrorModal from "@/shared/components/UIElements/Modal/ErrorModal";
 import LoadingSpinner from "@/shared/components/UIElements/LoadingSpinner";
 
 const Login = () => {
+    const { usersApiUrl } = useApiContext();
     const authContext = useAuthContext();
     const [isLoginMode, setIsLoginMode] = useState(true);
 
@@ -20,12 +26,14 @@ const Login = () => {
         password: { value: '', isValid: false }
     }, false);
 
-
     const handleModeSwitch = () => {
         if (!isLoginMode) {
             if ('name' in formState) {
                 delete formState['name']
             };
+            if ('image' in formState) {
+                delete formState['image'];
+            }
             setFormData(
                 { ...formState.inputs },
                 formState.inputs.email.isValid && formState.inputs.password.isValid
@@ -34,7 +42,8 @@ const Login = () => {
             setFormData(
                 {
                     ...formState.inputs,
-                    name: { value: '', isValid: false }
+                    name: { value: '', isValid: false },
+                    image: { value: null, isValid: false}
                 },
                 false
             );
@@ -44,11 +53,10 @@ const Login = () => {
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
         if (isLoginMode) {
             try {
                 const data = await sendRequest(
-                    'http://localhost:5001/api/users/login',
+                    `${usersApiUrl}/login`,
                     'POST',
                     JSON.stringify({
                         email: formState.inputs.email.value,
@@ -56,24 +64,24 @@ const Login = () => {
                     }),
                     { 'Content-Type': 'application/json' }
                 );
-                authContext.login(data.user!.id!);
+                authContext.login(data.userId!, data.token!);
             } catch (error) {
                 console.log(error);
             }
         } else {
             try {
+                const formData = new FormData();
+                formData.append('name', formState.inputs.name.value);
+                formData.append('email', formState.inputs.email.value);
+                formData.append('password', formState.inputs.password.value);
+                formData.append('image', formState.inputs.image.value);
+
                 const data = await sendRequest(
-                    'http://localhost:5001/api/users/signup',
+                    `${usersApiUrl}/signup`,
                     'POST',
-                    JSON.stringify({
-                        name: formState.inputs.name.value,
-                        email: formState.inputs.email.value,
-                        password: formState.inputs.password.value,
-                        imageUrl: 'someurl'
-                    }),
-                    { 'Content-Type': 'application/json' }
+                    formData
                 );
-                authContext.login(data.user!.id!);
+                authContext.login(data.userId!, data.token!);
             } catch (error) {
                 console.log(error);
             }
@@ -91,15 +99,18 @@ const Login = () => {
                     onSubmit={handleSubmit}
                 >
                     {!isLoginMode && (
-                        <Input
-                            id="name"
-                            inputType="input"
-                            type="text"
-                            label="Name"
-                            validators={[ValidatorRequire()]}
-                            onChange={handleInputChange}
-                            errorText="Please enter a name."
-                        />
+                        <>
+                            <Input
+                                id="name"
+                                inputType="input"
+                                type="text"
+                                label="Name"
+                                validators={[ValidatorRequire()]}
+                                onChange={handleInputChange}
+                                errorText="Please enter a name."
+                            />
+                            <ImagePicker id="image" onChange={handleInputChange} errorText="Please select an image."/>
+                        </>
                     )}
                     <Input
                         id="email"

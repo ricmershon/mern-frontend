@@ -7,11 +7,14 @@ interface SendRequestReturnType {
     places?: Array<PlaceType>;
     user?: UserType;
     users?: Array<UserType>;
+    email?: string,
+    userId?: string,
+    token?: string
 }
 
 type UseFetchReturnType = [
     isLoading: boolean,
-    Error: ErrorMessage,
+    error: ErrorMessage,
     sendRequest: (
         url: string,
         method?: string,

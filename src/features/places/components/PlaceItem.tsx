@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import useFetch from "@/shared/hooks/use-fetch";
 import { useAuthContext } from "@/shared/context/auth-context";
+import { useApiContext } from "@/shared/context/apis-context";
 import { PlaceType } from "@/types";
 import Modal from "@/shared/components/UIElements/Modal/Modal";
 import Card from "@/shared/components/UIElements/Card";
@@ -20,7 +21,8 @@ const PlaceItem = ({ place, onDeletePlace }: PlaceItemProps) => {
 
     const [isLoading, error, sendRequest, clearError] = useFetch();
 
-    const { userId } = useAuthContext();
+    const authContext = useAuthContext();
+    const { placesApiUrl, baseApiUrl } = useApiContext();
 
     const openMapHandler = () => setShowMap(true);
     const closeMapHandler = () => setShowMap(false);
@@ -32,8 +34,10 @@ const PlaceItem = ({ place, onDeletePlace }: PlaceItemProps) => {
         setShowDeleteConfirmation(false);
         try {
             await sendRequest(
-                `http://localhost:5001/api/places/${place.id}`,
-                'DELETE'
+                `${placesApiUrl}/${place.id}`,
+                'DELETE',
+                null,
+                { Authorization: 'Bearer ' + authContext.token }
             );
         } catch (error) {
             console.log(error);
@@ -76,7 +80,7 @@ const PlaceItem = ({ place, onDeletePlace }: PlaceItemProps) => {
                 <Card className="p-0 bg-white">
                     {isLoading && <LoadingSpinner asOverlay={true} />}
                     <div className="w-full h-[12.5rem] mr-[1.5rem] md:h-80">
-                        <img className="w-full h-full object-cover" src={place.imageUrl} alt={place.title} />
+                        <img className="w-full h-full object-cover" src={`${baseApiUrl}/${place.image}`} alt={place.title} />
                     </div>
                     <div className="p-4 text-center">
                         <h2 className="m-0 mb-2">{place.title}</h2>
@@ -85,7 +89,7 @@ const PlaceItem = ({ place, onDeletePlace }: PlaceItemProps) => {
                     </div>
                     <div className="p-4 text-center border-t border-[#ccc]">
                         <Button inverse onClick={openMapHandler}>VIEW ON MAP</Button>
-                        {userId === place.creator && (
+                        {authContext.userId === place.creator && (
                             <>
                                 <Button to={`/places/${place.id}`}>EDIT</Button>
                                 <Button danger onClick={openDeleteConfirmationHandler}>DELETE</Button>
