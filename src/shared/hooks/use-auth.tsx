@@ -11,7 +11,6 @@ type UseAuthReturnType = [
 
 let logoutTimer: string | number | NodeJS.Timeout | undefined;
 
-
 const useAuth = (): UseAuthReturnType => {
     const [token, setToken] = useState<string | null>(null);
     const [userId, setUserId] = useState<string | null>(null);
