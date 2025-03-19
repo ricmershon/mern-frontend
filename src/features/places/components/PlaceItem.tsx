@@ -15,6 +15,7 @@ interface PlaceItemProps {
     place: PlaceType;
     onDeletePlace: (placeId: string) => void;
 }
+
 const PlaceItem = ({ place, onDeletePlace }: PlaceItemProps) => {
     const [showMap, setShowMap] = useState(false);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);

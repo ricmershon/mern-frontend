@@ -9,7 +9,6 @@ interface ButtonProps {
     inverse?: boolean;
     danger?: boolean
     to?: string;
-    exact?: boolean;
     type?: "submit" | "reset" | "button" | undefined;
     onClick?: () => void;
     disabled?: boolean;
@@ -21,7 +20,6 @@ const Button = ({
     inverse,
     danger,
     to,
-    exact,
     type,
     onClick,
     disabled,
@@ -43,7 +41,6 @@ const Button = ({
         return (
             <Link
                 to={to}
-                exact={exact}
                 className={`button button--${size || 'default'} ${inverse &&
                 'button--inverse'} ${danger && 'button--danger'}`}
             >
