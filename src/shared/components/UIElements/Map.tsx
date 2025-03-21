@@ -10,17 +10,18 @@ interface MapProps {
 }
 
 const Map = ({ center, zoom, className, style }: MapProps) => {
-    const mapRef = useRef<HTMLDivElement>(null);
+    const mapRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        const map = new google.maps.Map(mapRef.current, {
-            center: center,
-            zoom: zoom
-        });
-    
+        let map;
+        if (mapRef.current) {
+            map = new google.maps.Map(mapRef.current, {
+                center: center,
+                zoom: zoom
+            });
+        }
         new google.maps.Marker({ position: center, map: map });
     }, [center, zoom]);
-
 
     return (
         <div ref={mapRef} className={`w-full h-full ${className}`} style={style} />
