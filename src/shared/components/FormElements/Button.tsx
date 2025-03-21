@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import './Buttons.css';
 
 interface ButtonProps {
-    href?: string;
     size?: string;
     inverse?: boolean;
     danger?: boolean
@@ -15,7 +14,6 @@ interface ButtonProps {
 }
 
 const Button = ({
-    href,
     size,
     inverse,
     danger,
@@ -25,18 +23,6 @@ const Button = ({
     disabled,
     children
 }: PropsWithChildren<ButtonProps>) => {
-    if (href) {
-        return (
-            <a
-                className={`button button--${size || 'default'} ${inverse &&
-                'button--inverse'} ${danger && 'button--danger'}`}
-                href={href}
-            >
-                {children}
-            </a>
-        );
-    }
-
     if (to) {
         return (
             <Link
