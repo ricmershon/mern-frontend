@@ -29,7 +29,7 @@ const useAuth = (): UseAuthReturnType => {
             new Date(new Date().getTime() + LoginDuration);
     
         setTokenExpirationTime(tokenExpirationTime)
-        localStorage.setItem(
+        sessionStorage.setItem(
             'userData',
             JSON.stringify({
                 userId: userId,
@@ -44,14 +44,15 @@ const useAuth = (): UseAuthReturnType => {
         setToken(null);
         setTokenExpirationTime(null);
         setUserId(null);
-        localStorage.removeItem('userData');
+        sessionStorage.removeItem('userData');
     }, []);
     
     /**
-     * Check for user data in localStorage, and if there, login using that data.
+     * Prevents logout on page refresh. Check for user data in sessionStorage, and if
+     * there, login using that data.
      */
     useEffect(() => {
-        const storedData = localStorage.getItem('userData');
+        const storedData = sessionStorage.getItem('userData');
         if (storedData) {
             const parsedData = JSON.parse(storedData);
             if (
@@ -63,6 +64,9 @@ const useAuth = (): UseAuthReturnType => {
         }
     }, [login]);
     
+    /**
+     * Sets timer for logout on token expiration.
+     */
     useEffect(() => {
         if (token && tokenExpirationTime) {
             const remainingTime = tokenExpirationTime.getTime() - new Date().getTime();

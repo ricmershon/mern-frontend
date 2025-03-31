@@ -11,13 +11,13 @@ interface AvatarProps {
 }
 
 const Avatar = ({ className, style, image, alt, width }: AvatarProps) => {
-    const { baseApiUrl } = useApiContext();
+    const { assetsApiUrl } = useApiContext();
 
     return (
         <div className={`flex justify-center items-center w-full h-full ${className}`} style={style}>
             <img
                 className='block rounded-full w-full h-full object-cover'
-                src={`${baseApiUrl}/${image}`}
+                src={`${assetsApiUrl}/${image}`}
                 alt={alt}
                 style={{ width: width, height: width }}
             />

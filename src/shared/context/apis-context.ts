@@ -1,13 +1,13 @@
 import { createContext, useContext } from "react";
 
 interface ApiContextProps {
-    baseApiUrl: string,
+    assetsApiUrl: string,
     usersApiUrl: string,
     placesApiUrl: string
 }
 
 export const ApiContext = createContext<ApiContextProps>({
-    baseApiUrl: '',
+    assetsApiUrl: '',
     usersApiUrl: '',
     placesApiUrl: ''
 });

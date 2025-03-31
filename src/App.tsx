@@ -52,28 +52,28 @@ const App = () => {
     }
 
     return (
-        <ApiContext.Provider value={{
-            baseApiUrl: import.meta.env.VITE_API_URL_BASE!,
-            usersApiUrl: import.meta.env.VITE_API_URL_USERS!,
-            placesApiUrl: import.meta.env.VITE_API_URL_PLACES!
-        }}>
-            <AuthContext.Provider
-                value={{
-                    isLoggedIn: !!token,
-                    token: token,
-                    login: login,
-                    logout: logout,
-                    userId: userId
-                }}
-            >
+        <AuthContext.Provider
+            value={{
+                isLoggedIn: !!token,
+                token: token,
+                login: login,
+                logout: logout,
+                userId: userId
+            }}
+        >
+            <ApiContext.Provider value={{
+                assetsApiUrl: import.meta.env.VITE_API_URL_ASSETS!,
+                usersApiUrl: import.meta.env.VITE_API_URL_USERS!,
+                placesApiUrl: import.meta.env.VITE_API_URL_PLACES!
+            }}>
                 <Router>
                     <MainNavigation />
                     <main className='mt-[5rem]'>
                         {routes}
                     </main>
                 </Router>
-            </AuthContext.Provider>
-        </ApiContext.Provider>            
+            </ApiContext.Provider>
+        </AuthContext.Provider>            
     );
 }
 
