@@ -1,7 +1,12 @@
+import { ErrorMessage } from '@/types';
 import Modal from './Modal';
 import Button from '@/shared/components/FormElements/Button';
 
-const ErrorModal = (props) => (
+interface ErrorModalProps {
+    error: ErrorMessage,
+    onClear: () => void;
+}
+const ErrorModal = (props: ErrorModalProps) => (
     <Modal
         onCancel={props.onClear}
         header="An Error Occurred!"

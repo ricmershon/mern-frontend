@@ -27,7 +27,7 @@ const ImagePicker = ({ id, center, isUserImage = false, onChange, errorText }: I
     }, [file]);
 
     const handlePicked = (event: ChangeEvent<HTMLInputElement>) => {
-        let pickedFile: File | null = null;
+        let pickedFile: File | string | null = null;
         let fileIsValid = isValid;
         if (event.target.files && event.target.files.length === 1) {
             pickedFile = event.target.files[0];
@@ -62,7 +62,7 @@ const ImagePicker = ({ id, center, isUserImage = false, onChange, errorText }: I
             <div className={`flex flex-col justify-center items-center ${center && 'center-content'}`}>
                 <div className="flex justify-center items-center text-center mb-4 w-52 h-52 max-w-full max-h-full border border-solid border-[#ccc]">
                     {previewUrl ? (
-                        <img src={previewUrl} alt="Preview" />
+                        <img src={previewUrl as string} alt="Preview" />
                     ) : (
                         <p>Please select an image</p>
                     )}

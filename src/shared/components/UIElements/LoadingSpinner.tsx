@@ -1,6 +1,10 @@
 import './LoadingSpinner.css';
 
-const LoadingSpinner = (props) => (
+interface LoadingSpinnerProps {
+    asOverlay: boolean;
+}
+
+const LoadingSpinner = (props: LoadingSpinnerProps) => (
     <div className={`${props.asOverlay && 'center-content loading-spinner__overlay'}`}>
         <div className="lds-dual-ring"></div>
     </div>
